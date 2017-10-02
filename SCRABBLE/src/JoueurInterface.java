@@ -1,1 +1,4 @@
-ab
+
+public interface JoueurInterface {
+int test;
+}
