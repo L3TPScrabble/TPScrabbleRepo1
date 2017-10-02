@@ -4,5 +4,5 @@ public class Sac {
 	/* A*/
 	private int pieceRestante;
 	private int alo;
-	pritva int a;
+	private int a;
 }
