@@ -12,7 +12,4 @@ public class Sac {
 		this.sacVide = false;
 	}
 	
-	public test(){
-	}
-	
 }
