@@ -11,7 +11,7 @@ public class Partie {
 	public Partie() {
 		super();
 		this.joueurs = null;
-		this.sac = new Sac();
+		this.sac = new Sac(null);
 		this.plateau = new Plateau();
 	}
 

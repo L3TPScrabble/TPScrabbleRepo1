@@ -6,10 +6,16 @@ public class Sac {
 	private boolean sacVide;
 	
 	
-	public Sac() {
+	public Sac(List<Piece> pioche) {
 		this.pioche = pioche;	//définir la pioche de départ
 		this.piecesRestantes = 102;
 		this.sacVide = false;
 	}
+		
+	public void retirerPieces(int nombre){
+		this.piecesRestantes = this.piecesRestantes - nombre;
+	}
 	
+	
+		
 }
