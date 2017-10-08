@@ -1,14 +1,15 @@
 
-public class Piece {
+public class Piece extends Case{
 	
-	private String lettre;
-	private int points;
+	protected char lettre;
+	protected int points;
 	
 	
-	public Piece(String lettre, int points) {
+	public Piece(char lettre, int points) {
 		this.lettre = lettre;
 		this.points = points;
 	}
+
 	
 	
 }
