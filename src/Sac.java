@@ -1,4 +1,4 @@
-import java.util.List;
+﻿import java.util.List;
 
 public class Sac {
 	private List<Piece>pioche;
@@ -12,6 +12,7 @@ public class Sac {
 		this.sacVide = false;
 	}
 	
-	
+	public test(){
+	}
 	
 }
