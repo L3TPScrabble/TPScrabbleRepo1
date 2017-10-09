@@ -1,8 +1,8 @@
 
-public class Case extends Plateau{
+public class Case{
 	private int id;
 	private boolean estVide;
-	protected Piece contenu;
+	private Piece contenu;
 	
 	public Case() {
 		this.id = 0;
@@ -21,5 +21,10 @@ public class Case extends Plateau{
 		return false;
 	}
 	
-	
+	public Piece getContenu() {
+		return contenu;
+	}
+	public void setContenu(Piece contenu) {
+		this.contenu = contenu;
+	}
 }
