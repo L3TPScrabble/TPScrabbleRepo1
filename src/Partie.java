@@ -1,10 +1,13 @@
 import java.util.List;
+import java.util.Scanner;
 
+import interfaces.JoueurInterface;
 import interfaces.PartieInterface;
 
 public class Partie implements PartieInterface{
 	
-	private List<Joueur> joueurs;
+	Scanner sc = new Scanner(System.in);
+	private List<JoueurInterface>joueurs;
 	private Sac sac;
 	private Plateau plateau;
 	
@@ -18,6 +21,13 @@ public class Partie implements PartieInterface{
 	}
 
 
+	public void newJoueur() {
+		String nom;
+		System.out.println("Rentrez votre pseudo :");
+		nom = sc.nextLine();
+		JoueurInterface joueur = new Joueur(nom);
+		joueurs.add(joueur);
+	}
 
 	public static void main(String[] args) {
 		

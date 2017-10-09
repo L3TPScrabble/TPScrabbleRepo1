@@ -9,7 +9,7 @@ public class Joueur implements JoueurInterface{
 	private List<Piece> main;
 	
 	
-	public Joueur(String pseudo, int numeroJoueur) {
+	public Joueur(String pseudo) {
 		this.pseudo = pseudo;
 		this.numeroJoueur = numeroJoueur;
 		this.score = 0;
