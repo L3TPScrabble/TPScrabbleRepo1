@@ -11,7 +11,6 @@ public class Sac {
 		this.piecesRestantes = 102;
 		this.sacVide = false;
 	}
-	
-	
+
 	
 }

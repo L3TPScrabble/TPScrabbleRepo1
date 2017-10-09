@@ -14,5 +14,29 @@ public class Joueur {
 		this.main = null;
 	}
 	
+	public String getPseudo(){
+		return pseudo;
+	}
+	
+	public void setPseudo(String newPseudo){
+		pseudo = newPseudo;
+	}
+	
+	public int getNumeroJoueur(){
+		return numeroJoueur;
+	}
+	
+	public void setNumeroJoueur(int newNumeroJoueur){
+		numeroJoueur = newNumeroJoueur;
+	}
+	
+	public int getScore(){
+		return score;
+	}
+	
+	public void setScore(int newScore)
+	{
+		score = newScore;
+	}
 	
 }
