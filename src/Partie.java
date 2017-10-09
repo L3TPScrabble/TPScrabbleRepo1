@@ -1,6 +1,8 @@
 import java.util.List;
 
-public class Partie {
+import interfaces.PartieInterface;
+
+public class Partie implements PartieInterface{
 	
 	private List<Joueur> joueurs;
 	private Sac sac;
@@ -11,7 +13,7 @@ public class Partie {
 	public Partie() {
 		super();
 		this.joueurs = null;
-		this.sac = new Sac(null);
+		this.sac = new Sac();
 		this.plateau = new Plateau();
 	}
 

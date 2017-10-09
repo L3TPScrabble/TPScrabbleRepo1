@@ -1,12 +1,15 @@
+import interfaces.CaseInterface;
+import interfaces.PlateauInterface;
 
-public class Plateau {
+public class Plateau implements PlateauInterface{
 	private Case[][] matrice;
 	private int taille;
 	
 	
 	public Plateau() {
 		this.taille = 15;
-		this.matrice = new Case[taille][taille];
+		this.matrice = (Case[][]) new CaseInterface[taille][taille];
+	
 	}
 	
 	public Boolean estPlein() {
@@ -39,9 +42,6 @@ public class Plateau {
 				}
 			}
 		}		
-	}
-	
 }
 	
-	
-
+}

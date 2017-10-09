@@ -1,15 +1,15 @@
+import interfaces.PieceInterface;
 
-public class Piece extends Case{
+public class Piece extends Case implements PieceInterface{
 	
 	protected char lettre;
-	protected int points;
+	private int points;
 	
 	
 	public Piece(char lettre, int points) {
 		this.lettre = lettre;
 		this.points = points;
 	}
-
 	
 	
 }

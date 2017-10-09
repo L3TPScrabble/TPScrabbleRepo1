@@ -1,5 +1,6 @@
+import interfaces.CaseInterface;
 
-public class Case extends Plateau{
+public class Case extends Plateau implements CaseInterface{
 	private int id;
 	private boolean estVide;
 	protected Piece contenu;
@@ -17,7 +18,6 @@ public class Case extends Plateau{
 
 
 	public boolean estVide() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 	
