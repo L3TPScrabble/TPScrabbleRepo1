@@ -10,8 +10,9 @@ public class Sac {
 		this.pioche = pioche;	//définir la pioche de départ
 		this.piecesRestantes = 102;
 		this.sacVide = false;
-		pioche.getLettre()
+		pioche.add(setLettre('A'));
 	}
+
 
 
 	public List<Piece> getPioche() {
