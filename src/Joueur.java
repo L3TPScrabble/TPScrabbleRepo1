@@ -1,6 +1,8 @@
 import java.util.List;
 
-public class Joueur {
+import interfaces.JoueurInterface;
+
+public class Joueur implements JoueurInterface{
 	private String pseudo;
 	private int numeroJoueur;
 	private int score;
