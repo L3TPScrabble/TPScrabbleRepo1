@@ -1,10 +1,6 @@
-import interfaces.CaseInterface;
 
-<<<<<<< HEAD
-public class Case{
-=======
-public class Case extends Plateau implements CaseInterface{
->>>>>>> 19ef56c347864d8f5cf863fb55d4afb90be69dac
+
+public class Case extends Plateau {
 	private int id;
 	private boolean estVide;
 	private Piece contenu;
@@ -32,3 +28,8 @@ public class Case extends Plateau implements CaseInterface{
 		this.contenu = contenu;
 	}
 }
+
+
+
+
+

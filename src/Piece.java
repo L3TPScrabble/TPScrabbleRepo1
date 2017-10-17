@@ -1,14 +1,9 @@
-import interfaces.PieceInterface;
 
-<<<<<<< HEAD
-public class Piece{
 
-	private char lettre;
-=======
-public class Piece extends Case implements PieceInterface{
+
+	public class Piece extends Case{
 	
 	protected char lettre;
->>>>>>> 19ef56c347864d8f5cf863fb55d4afb90be69dac
 	private int points;
 	
 	
@@ -16,7 +11,6 @@ public class Piece extends Case implements PieceInterface{
 		this.lettre = lettre;
 		this.points = points;
 	}
-<<<<<<< HEAD
 	
 	
 	public char getLettre() {
@@ -27,8 +21,6 @@ public class Piece extends Case implements PieceInterface{
 	public void setLettre(char lettre) {
 		this.lettre = lettre;
 	}
-=======
->>>>>>> 19ef56c347864d8f5cf863fb55d4afb90be69dac
 	
 	
 }

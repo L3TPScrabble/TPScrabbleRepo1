@@ -16,8 +16,9 @@ public class Partie {
 	public Partie() {
 		super();
 		this.joueurs = null;
-		this.sac = new Sac(null);
+		this.sac = new Sac();
 		this.plateau = new Plateau();
+		
 	}
 
 
@@ -29,7 +30,8 @@ public class Partie {
 		    frame.setContentPane(plateau.getTotal());
 		    frame.pack();
 		    frame.setVisible(true);
-		  }       
+		    System.out.println("Terminé");
+		    }       
 	
 	
 
