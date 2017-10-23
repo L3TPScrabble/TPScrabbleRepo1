@@ -1,8 +1,6 @@
 import java.util.List;
 
-import interfaces.SacInterface;
-
-public class Sac implements SacInterface{
+public class Sac{
 	private List<Piece>pioche;
 	private int piecesRestantes;
 	private boolean sacVide;
@@ -14,8 +12,24 @@ public class Sac implements SacInterface{
 		this.sacVide = false;
 	}
 	
+
+
+	public int getPiecesRestantes() {
+		return piecesRestantes;
+	}
+
+
+
+	public List<Piece> getPioche() {
+		return pioche;
+	}
+
+
+
 	public void retirerPieces(int nombre){
 		this.piecesRestantes = this.piecesRestantes - nombre;
 }
+
+
 	
 }
