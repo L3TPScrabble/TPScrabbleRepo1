@@ -1,7 +1,9 @@
-public class Case{
+import interfaces.CaseInterface;
+
+public class Case extends Plateau implements CaseInterface{
 	private int id;
 	private boolean estVide;
-	private Piece contenu;
+	protected Piece contenu;
 	
 	public Case() {
 		this.id = 0;
@@ -19,10 +21,11 @@ public class Case{
 		return false;
 	}
 	
-	public Piece getContenu() {
-		return contenu;
+	@Override
+	public int bonusCase(CaseInterface c) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
-	public void setContenu(Piece contenu) {
-		this.contenu = contenu;
-	}
+	
+	
 }

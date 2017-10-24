@@ -1,39 +1,16 @@
-import java.awt.GridLayout;
+import interfaces.CaseInterface;
+import interfaces.PlateauInterface;
 
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-
-public class Plateau {
+public class Plateau implements PlateauInterface{
 	private Case[][] matrice;
 	private int taille;
-    private JPanel total;
-
 	
 	
 	public Plateau() {
 		this.taille = 15;
-		int i , j = 0;
-        JPanel fenetre = new JPanel();
-		total = new JPanel();
-        fenetre.setLayout(new GridLayout(15,15));
-		JButton[][] matrice = new JButton[taille][taille];
-		
-		for(i=0;i<15;i++){
-			for(j=0;j<15;j++){
-				JButton a = new JButton();
-				matrice[i][j] = a;
-				matrice[i][j].setText(".");
-	    		fenetre.add(matrice[i][j]);
-	    	
-			}
+		this.matrice = new Case[taille][taille];
 	
-	    	
-	    
-        total.add(fenetre);
-
 	}
-}
 	
 	public Boolean estPlein() {
 		for(int i=0; i<15 ; i++)
@@ -60,22 +37,11 @@ public class Plateau {
 			{
 				for(char c: charArray)
 				{
-					matrice[g][j].getContenu().setLettre(c);
+					matrice[g][j].contenu.lettre = c;
 					g++;
 				}
 			}
 		}		
-	}
-
-	public JPanel getTotal() {
-		return total;
-	}
-
-	public void setTotal(JPanel total) {
-		this.total = total;
-	}
-	
 }
 	
-	
-
+}
