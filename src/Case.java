@@ -1,6 +1,6 @@
 import interfaces.CaseInterface;
 
-public class Case extends Plateau implements CaseInterface{
+public class Case implements CaseInterface{
 	private int id;
 	private boolean estVide;
 	protected Piece contenu;

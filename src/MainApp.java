@@ -50,7 +50,7 @@ public class MainApp extends Application {
             // Load person overview.
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainApp.class.getResource("PersonOverview.fxml"));
-            AnchorPane personOverview = (AnchorPane) loader.load();
+            BorderPane personOverview = (BorderPane) loader.load();
 
             // Set person overview into the center of root layout.
             rootLayout.setCenter(personOverview);
