@@ -63,6 +63,16 @@ public class Partie implements PartieInterface{
 		tourDePioche();
 		afficherMain(1);
 		System.out.println(sac.getPiecesRestantes());
+
+		/*	  Plateau plateau = new Plateau();
+			    
+			    JFrame frame = new JFrame();
+			    frame.setContentPane(plateau.getTotal());
+			    frame.pack();
+			    frame.setVisible(true);
+			  }       */
+		
+		
 	}
 	
 	
