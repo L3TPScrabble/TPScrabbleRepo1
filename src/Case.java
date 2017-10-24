@@ -1,5 +1,6 @@
+import interfaces.CaseInterface;
 
-public class Case {
+public class Case extends Plateau implements CaseInterface{
 	private int id;
 	private boolean estVide;
 	private Piece contenu;
@@ -39,5 +40,10 @@ public class Case {
 	public void setId(int nouvelleId)
 	{
 		id = nouvelleId;
+	}
+	
+	public int bonusCase(CaseInterface c) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 }

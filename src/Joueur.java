@@ -1,17 +1,25 @@
+import java.util.ArrayList;
 import java.util.List;
 
 public class Joueur {
 	private String pseudo;
-	private int numeroJoueur;
+	private int id;
+	private static int numeroJoueur = 1;
 	private int score;
 	private List<Piece> main;
 	
 	
-	public Joueur(String pseudo, int numeroJoueur) {
+	public Joueur(String pseudo) {
 		this.pseudo = pseudo;
-		this.numeroJoueur = numeroJoueur;
 		this.score = 0;
-		this.main = null;
+		this.setMain(new ArrayList<Piece>());
+		this.id = this.numeroJoueur;
+		this.numeroJoueur ++;
+	}
+	
+	public void newMain(Sac sac) {
+		for(int i=0; i < 7; i++)
+			getMain().add(sac.piocher());
 	}
 	
 	public String getPseudo(){
@@ -37,6 +45,22 @@ public class Joueur {
 	public void setScore(int newScore)
 	{
 		score = newScore;
+	}
+	
+	public int getId(){
+		return id;
+	}
+	
+	public void setId(int newId){
+		id = newId;
+	}
+
+	public List<Piece> getMain() {
+		return main;
+	}
+
+	public void setMain(List<Piece> main) {
+		this.main = main;
 	}
 	
 }
