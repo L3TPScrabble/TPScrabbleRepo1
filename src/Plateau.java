@@ -1,5 +1,7 @@
+import interfaces.CaseInterface;
+import interfaces.PlateauInterface;
 
-public class Plateau {
+public class Plateau implements PlateauInterface{
 	private Case[][] matrice;
 	private int taille;
 	
