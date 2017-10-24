@@ -21,5 +21,11 @@ public class Case extends Plateau implements CaseInterface{
 		return false;
 	}
 	
+	@Override
+	public int bonusCase(CaseInterface c) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	
 	
 }

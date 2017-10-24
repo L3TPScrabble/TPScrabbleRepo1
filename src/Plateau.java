@@ -8,7 +8,7 @@ public class Plateau implements PlateauInterface{
 	
 	public Plateau() {
 		this.taille = 15;
-		this.matrice = (Case[][]) new CaseInterface[taille][taille];
+		this.matrice = new Case[taille][taille];
 	
 	}
 	
