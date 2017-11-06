@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.collections.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import test.*?>
+<?import classes.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml">
+  <children>
+  <ComboBox layoutX="14.0" layoutY="14.0">
+    <items>
+      <FXCollections fx:factory="observableArrayList">
+        <Piece lettreI="A"/>
+        <Piece lettreI="B"/>
+        <Piece lettreI="C"/>
+      </FXCollections>
+    </items>
+  </ComboBox>
+  </children>
+</AnchorPane>
+
