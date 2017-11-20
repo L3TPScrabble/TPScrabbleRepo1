@@ -25,51 +25,59 @@ public class Sac implements SacInterface{
 	
 	public Piece piocher() {
 		int randomId = (int)(Math.random() * pioche.size());
+		try{
 		Piece randomLettre = pioche.get(randomId);
 		pioche.remove(randomId);
 		return randomLettre;
+		}
+		catch(Exception e){
+			e.printStackTrace();
+			return null;
+		}
+		
 	}
 	
-	/*public void newSac() {
+	
+	public void newSac() {
 		// TODO Auto-generated method stub
 		for(int i =0; i < 9; i++)
-			pioche.add(new Piece('A'));
+			pioche.add(new Piece("A"));
 		for(int i=0; i < 15; i++)
-			pioche.add(new Piece('E'));
+			pioche.add(new Piece("E"));
 		for(int i=0; i < 8; i++)
-			pioche.add(new Piece('I'));
+			pioche.add(new Piece("I"));
 		for(int i=0; i < 6; i++) {
-			pioche.add(new Piece('N'));
-			pioche.add(new Piece('O'));
-			pioche.add(new Piece('R'));
-			pioche.add(new Piece('S'));
-			pioche.add(new Piece('T'));
-			pioche.add(new Piece('U'));
+			pioche.add(new Piece("N"));
+			pioche.add(new Piece("O"));
+			pioche.add(new Piece("R"));
+			pioche.add(new Piece("S"));
+			pioche.add(new Piece("T"));
+			pioche.add(new Piece("U"));
 		}
 		for(int i=0; i < 5; i++)
-			pioche.add(new Piece('L'));
+			pioche.add(new Piece("L"));
 		for(int i=0; i < 3; i++) {
-			pioche.add(new Piece('D'));
-			pioche.add(new Piece('M'));
+			pioche.add(new Piece("D"));
+			pioche.add(new Piece("M"));
 		}
 		for(int i=0; i < 2; i++) {
-			pioche.add(new Piece('G'));
-			pioche.add(new Piece('B'));
-			pioche.add(new Piece('C'));
-			pioche.add(new Piece('P'));
-			pioche.add(new Piece('F'));
-			pioche.add(new Piece('H'));
-			pioche.add(new Piece('V'));
-			pioche.add(new Piece(' ', true));
+			pioche.add(new Piece("G"));
+			pioche.add(new Piece("B"));
+			pioche.add(new Piece("C"));
+			pioche.add(new Piece("P"));
+			pioche.add(new Piece("F"));
+			pioche.add(new Piece("H"));
+			pioche.add(new Piece("V"));
+			pioche.add(new Piece(" " , true));
 		}
-		pioche.add(new Piece('J'));
-		pioche.add(new Piece('Q'));
-		pioche.add(new Piece('K'));
-		pioche.add(new Piece('W'));
-		pioche.add(new Piece('X'));
-		pioche.add(new Piece('Y'));
-		pioche.add(new Piece('Z'));
-	}*/
+		pioche.add(new Piece("J"));
+		pioche.add(new Piece("Q"));
+		pioche.add(new Piece("K"));
+		pioche.add(new Piece("W"));
+		pioche.add(new Piece("X"));
+		pioche.add(new Piece("Y"));
+		pioche.add(new Piece("Z"));
+	}
 
 
 	public List<Piece> getPioche() {
@@ -101,12 +109,6 @@ public class Sac implements SacInterface{
 		this.sacVide = sacVide;
 	}
 
-	@Override
-	public void newSac() {
-		// TODO Auto-generated method stub
-		
-	}
-	
 	
 	
 }
