@@ -17,45 +17,50 @@ import javafx.scene.layout.AnchorPane;
 public class Partie implements PartieInterface{
 	
 	static Scanner sc = new Scanner(System.in);
-	private static List<Joueur>joueurs;
+	private static List<Joueur>participants;
 	private static Sac sac;
 	private Plateau plateau;
 	
 	
 
 	public Partie() {
-		this.joueurs = new ArrayList<Joueur>();
+		this.participants = new ArrayList<Joueur>();
 		this.sac = new Sac();
 		this.plateau = new Plateau();
 	}
 
 
-	public void newJoueur() {
-		String nom;
-		System.out.println("Rentrez votre pseudo :");
-		nom = sc.nextLine();
-		Joueur joueur = new Joueur(nom);
-		joueurs.add(joueur);
-	}
 	
 	public void newMot() {
 		
 	}
 	
-	
-	public static void tourDePioche() {
-		for(Joueur j : joueurs)
+	public void Distribution(){
+		for(Joueur j : participants)
 			j.newMain(sac);
 	}
+
 	
 	
 	public static void afficherMain(int id) {
-		for(Joueur j : joueurs) {
+		for(Joueur j : participants) {
 			if(j.getId() == id)
 			for(Piece p : j.getMain())
 				System.out.print(p.getLettre() + " ");
 		}
 		System.out.println();
+	}
+	
+	public Sac getSac(){
+		return sac;
+	}
+	
+	public void setSac(Sac s){
+		sac = s;
+	}
+	
+	public List<Joueur> getParticipants (){
+		return participants;
 	}
 
 	public static void main(String[] args) {
@@ -82,18 +87,6 @@ public class Partie implements PartieInterface{
 	
 	
 
-	@Override
-	public void newPartie() {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public void jouerMot() {
-		// TODO Auto-generated method stub
-		
-	}
 
 
 	public boolean verifMot(String mot) {
@@ -123,5 +116,31 @@ public class Partie implements PartieInterface{
 		}
 		return false;
 	}
+
+
+
+	@Override
+	public void newJoueur() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+	@Override
+	public void newPartie() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+	@Override
+	public void jouerMot() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	
 
 }

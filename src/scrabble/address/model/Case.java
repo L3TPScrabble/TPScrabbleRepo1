@@ -6,6 +6,7 @@ public class Case extends Plateau implements CaseInterface{
 	private int id;
 	private boolean estVide;
 	private Piece contenu;
+	private boolean jouable;
 	
 	public Case() {
 		this.id = 0;
