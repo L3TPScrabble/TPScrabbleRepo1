@@ -19,6 +19,8 @@ import javafx.stage.Stage;
 
 
 public class Plateau extends Application implements PlateauInterface{
+
+
 	private Case[][] matrice;
 	private int taille;
 	
@@ -122,6 +124,17 @@ public class Plateau extends Application implements PlateauInterface{
 			}
 		}
 	}*/
+	public Case[][] getMatrice() {
+		return matrice;
+	}
+
+	public void setMatrice(Case[][] matrice) {
+		this.matrice = matrice;
+	}
+
+	public int getTaille() {
+		return taille;
+	}
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {

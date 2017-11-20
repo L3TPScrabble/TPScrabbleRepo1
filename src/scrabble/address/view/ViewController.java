@@ -1,5 +1,7 @@
 package scrabble.address.view;
 
+import java.lang.reflect.InvocationTargetException;
+
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -16,9 +18,11 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
+import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import scrabble.address.mainapp.MainApp;
 import scrabble.address.model.Partie;
+import scrabble.address.model.Plateau;
 
 public class ViewController {
 
@@ -28,6 +32,8 @@ public class ViewController {
 	
 	@FXML
 	private Label lettre0;
+	
+	private Plateau t;
 	
 	@FXML
 	private Label lettre1;
@@ -68,7 +74,8 @@ public class ViewController {
 	}
 	
 	public void setMainApp(MainApp mainApp){
-		String tableJeu[][] = new String[15][15];
+		char tableJeu[][] = new char[15][15];
+		Node a;
 		this.mainApp = mainApp;
 		//Assigner la main Generé à la main affiché
 		lettre0.setText(mainApp.getMainJoueur().get(0).getLettre());
@@ -78,6 +85,7 @@ public class ViewController {
 		lettre4.setText(mainApp.getMainJoueur().get(4).getLettre());
 		lettre5.setText(mainApp.getMainJoueur().get(5).getLettre());
 		lettre6.setText(mainApp.getMainJoueur().get(6).getLettre());
+		
 		mainApp.getGP().addEventHandler(DragEvent.DRAG_OVER, (DragEvent event) -> {
 		    if (event.getGestureSource() != mainApp.getGP()
 		            && event.getDragboard().hasString()) {
@@ -108,6 +116,11 @@ public class ViewController {
 	                   
 	                        //Get the textarea and place it into flowPane2 instead
 	                    	mainApp.getGP().add(this.node, l, k);
+	                    	tableJeu[l][k] = this.node.toString().charAt(11);
+	                    	System.out.println(tableJeu[l][k]);
+	                		
+
+	                    	
 		                    success = true;
 
 	                    }
@@ -121,7 +134,8 @@ public class ViewController {
 	        }
 	
 	public void OnDragDetected(MouseEvent event){
-		   this.node = event.getPickResult().getIntersectedNode();;
+		try{
+		  this.node = (Text)event.getPickResult().getIntersectedNode();;
 		  Dragboard db = lettre0.startDragAndDrop(TransferMode.MOVE);
 
 		    // Put a string on a dragboard as an identifier
@@ -130,6 +144,10 @@ public class ViewController {
 		    db.setContent(content);
 		    //Consume the event
 		    event.consume();
+		}
+		catch(ClassCastException i){
+			System.out.println("Selectionner la lettre");
+		}
 	}
 	public void DRAG_DROPPED(DragEvent event){
 		
