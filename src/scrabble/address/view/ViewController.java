@@ -2,11 +2,14 @@ package scrabble.address.view;
 
 import java.lang.reflect.InvocationTargetException;
 
+import javax.swing.GroupLayout.Alignment;
+
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
+import javafx.geometry.VPos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.input.ClipboardContent;
@@ -113,7 +116,6 @@ public class ViewController {
 	                   
 	                    //Could have some more thorough checks of course.
 	                    if (db.hasString()) {
-	                   
 	                        //Get the textarea and place it into flowPane2 instead
 	                    	mainApp.getGP().add(this.node, l, k);
 	                    	tableJeu[l][k] = this.node.toString().charAt(11);
@@ -146,7 +148,7 @@ public class ViewController {
 		    event.consume();
 		}
 		catch(ClassCastException i){
-			System.out.println("Selectionner la lettre");
+			System.out.println("Glissez la lettre sur le terrain");
 		}
 	}
 	public void DRAG_DROPPED(DragEvent event){
