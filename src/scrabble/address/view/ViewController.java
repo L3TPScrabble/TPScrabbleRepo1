@@ -1,16 +1,28 @@
 package scrabble.address.view;
 
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.DragEvent;
+import javafx.scene.input.Dragboard;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.input.TransferMode;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
+import javafx.scene.text.TextAlignment;
 import scrabble.address.mainapp.MainApp;
 import scrabble.address.model.Partie;
 
 public class ViewController {
 
+		
 	@FXML
-	private GridPane mainJoueurTable;
+	private BorderPane bp;
 	
 	@FXML
 	private Label lettre0;
@@ -20,9 +32,11 @@ public class ViewController {
 
 	@FXML
 	private Label lettre2;
-	
+	@FXML
+	private Pane pane1;
 	@FXML
 	private Label lettre3;
+	
 	
 	@FXML
 	private Label lettre4;
@@ -35,7 +49,7 @@ public class ViewController {
 	
 	private MainApp mainApp;
 	
-	
+	private Node node;
 	public ViewController(){
 		
 	}
@@ -47,16 +61,102 @@ public class ViewController {
 	}
 	
 	public void setMainApp(MainApp mainApp){
+		
 		this.mainApp = mainApp;
-		lettre0.setText(mainApp.getMainJoueur().get(0).getLettre());
-		lettre1.setText(mainApp.getMainJoueur().get(1).getLettre());
-		lettre2.setText(mainApp.getMainJoueur().get(2).getLettre());
-		lettre3.setText(mainApp.getMainJoueur().get(3).getLettre());
-		lettre4.setText(mainApp.getMainJoueur().get(4).getLettre());
-		lettre5.setText(mainApp.getMainJoueur().get(5).getLettre());
-		lettre6.setText(mainApp.getMainJoueur().get(6).getLettre());
-	}
+		try{
+		lettre0.setText(mainApp.getPartie().getParticipants().get(0).getMain().get(0).getLettre());
+		lettre1.setText(mainApp.getPartie().getParticipants().get(0).getMain().get(1).getLettre());
+		lettre2.setText(mainApp.getPartie().getParticipants().get(0).getMain().get(2).getLettre());
+		lettre3.setText(mainApp.getPartie().getParticipants().get(0).getMain().get(3).getLettre());
+		lettre4.setText(mainApp.getPartie().getParticipants().get(0).getMain().get(4).getLettre());
+		lettre5.setText(mainApp.getPartie().getParticipants().get(0).getMain().get(5).getLettre());
+		lettre6.setText(mainApp.getPartie().getParticipants().get(0).getMain().get(6).getLettre());
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		mainApp.getGP().addEventHandler(DragEvent.DRAG_OVER, (DragEvent event) -> {
+		    if (event.getGestureSource() != mainApp.getGP()
+		            && event.getDragboard().hasString()) {
+		        event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+		    }
+		    event.consume();
+		});
+		 for (int i = 0; i < 15; i++) {
+	            for (int j = 0; j < 15; j++) {
+
+	                Label label = new Label();
+	                GridPane.setRowIndex(label, i);
+	                GridPane.setColumnIndex(label, j);
+	                mainApp.getGP().getChildren().add(label);
+	                label.setPrefSize(50, 50);
+	                int k = i;
+	                int l = j;
+	                label.addEventHandler(DragEvent.DRAG_DROPPED, (DragEvent event) -> {
+	                    //Get the dragboard back
+	                    Dragboard db = event.getDragboard();
+	                    
+	                    boolean success = false;
+	                   
+	                    //Could have some more thorough checks of course.
+	                    if (db.hasString()) {
+	                        //Get the textarea and place it into flowPane2 instead
+	                    	mainApp.getGP().add(this.node, l, k);
+	                    	success = true;
+	                    }
+	                    //Complete and consume the event.
+	                    event.setDropCompleted(success);
+	                    event.consume();
+	                });
+	               
+	                    }
+	         
+	            }
+	        }
 	
+	public void OnDragDetected(MouseEvent event){
+		   this.node = event.getPickResult().getIntersectedNode();;
+		  Dragboard db = lettre0.startDragAndDrop(TransferMode.MOVE);
 
+		    // Put a string on a dragboard as an identifier
+		    ClipboardContent content = new ClipboardContent();
+		    content.putString(this.node.toString());
+		    db.setContent(content);
+		    //Consume the event
+		    event.consume();
+	}
+	public void DRAG_DROPPED(DragEvent event){
+		
+		    //Get the dragboard back
+			Dragboard db = event.getDragboard();
+			
+		    boolean success = false;
+		    for( Node node: mainApp.getGP().getChildren()) {
 
+                if( node instanceof Label) {
+                    if( node.getBoundsInParent().contains(event.getSceneX(),  event.getSceneY())) {
+                    
+                        System.out.println( "Node: " + node + " at " + GridPane.getRowIndex( node) + "/" + GridPane.getColumnIndex( node));
+                    }
+                }
+		    }
+		    //Could have some more thorough checks of course.
+		    if (db.hasString()) {
+		        //Get the textarea and place it into flowPane2 instead
+		    	int i = (int) event.getSceneX();
+            	int j = (int) event.getSceneY();
+            	mainApp.getGP().add(this.node, i, j);
+		        success = true;
+		    }
+		    //Complete and consume the event.
+		    event.setDropCompleted(success);
+		    event.consume();
+	}
+		public void OVER(DragEvent event){
+	    if (event.getGestureSource() != mainApp.getGP()
+	            && event.getDragboard().hasString()) {
+	        event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+	    }
+	    event.consume();
+	}
 }
