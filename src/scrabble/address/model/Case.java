@@ -12,6 +12,7 @@ public class Case extends Plateau implements CaseInterface{
 		this.id = 0;
 		this.estVide = true;
 		this.contenu = null;
+		
 	}
 	public Case(int id) {
 		this.id = id;
@@ -21,8 +22,7 @@ public class Case extends Plateau implements CaseInterface{
 
 
 	public boolean estVide() {
-		// TODO Auto-generated method stub
-		return false;
+		return this.estVide;
 	}
 	
 	public Piece getContenu()
@@ -34,6 +34,14 @@ public class Case extends Plateau implements CaseInterface{
 	{
 		contenu = nouveauContenu ;
 	}
+	
+	public boolean isJouable() {
+		return jouable;
+	}
+	public void setJouable(Case c) {
+		c.jouable = true;
+	}
+
 	
 	public int getId()
 	{

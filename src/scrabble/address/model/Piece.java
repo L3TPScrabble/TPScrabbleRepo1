@@ -5,38 +5,38 @@ import interfaces.PieceInterface;
 
 public class Piece implements PieceInterface{
 	
-	private String lettre;
+	private char lettre;
 	private int points;
 	private boolean joker;
 	
-	public Piece(String lettre) {
+	public Piece(char lettre) {
 		this.lettre = lettre;
-		if(lettre == ("A") || lettre == ("E") || lettre == ("I") || lettre == ("L") || lettre == ("N") || lettre == ("O") || lettre == ("R") || lettre == ("S") || lettre == ("T") || lettre == ("U"))
+		if(lettre == ('A') || lettre == ('E') || lettre == ('I') || lettre == ('L') || lettre == ('N') || lettre == ('O') || lettre == ('R') || lettre == ('S') || lettre == ('T') || lettre == ('U'))
 			this.points = 1;
-		if(lettre == ("D") || lettre == ("G") || lettre == ("M"))
+		if(lettre == ('D') || lettre == ('G') || lettre == ('M'))
 			this.points = 2;
-		if(lettre == ("B") || lettre == ("C") || lettre == ("P"))
+		if(lettre == ('B') || lettre == ('C') || lettre == ('P'))
 			this.points = 3;
-		if(lettre == ("F") || lettre == ("H") || lettre == ("V"))
+		if(lettre == ('F') || lettre == ('H') || lettre == ('V'))
 			this.points = 4;
-		if(lettre == ("J") || lettre == ("Q"))
+		if(lettre == ('J') || lettre == ('Q'))
 			this.points = 8;
-		if(lettre == ("K") || lettre == ("W") || lettre == ("X") || lettre == ("Y") || lettre == ("Z"))
+		if(lettre == ('K') || lettre == ('W') || lettre == ('X') || lettre == ('Y') || lettre == ('Z'))
 			this.points = 10;
 		
 	}
 	
-	public Piece(String lettre, boolean joker) {
+	public Piece(char lettre, boolean joker) {
 		this.lettre = lettre;
 		if(joker == true)
 			this.points = 0;
 	}
 	
-	public String getLettre(){
+	public char getLettre(){
 		return lettre;
 	}
 	
-	public void setLettre(String nouvelleLettre){
+	public void setLettre(char nouvelleLettre){
 		lettre = nouvelleLettre;
 	}
 	

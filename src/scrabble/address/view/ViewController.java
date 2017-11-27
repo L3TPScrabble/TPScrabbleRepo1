@@ -50,7 +50,7 @@ public class ViewController {
 	@FXML
 	private Label lettre3;
 	
-	
+	private Piece P1;
 	@FXML
 	private Label lettre4;
 	
@@ -63,7 +63,6 @@ public class ViewController {
 	private MainApp mainApp;
 	
 	private Node node;
-	private Case tableJeu[][] = new Case[15][15];
 	
 	public ViewController(){
 		
@@ -77,15 +76,25 @@ public class ViewController {
 	
 	public void setMainApp(MainApp mainApp){
 		this.mainApp = mainApp;
+		char tableJeu[][] = new char[15][15];
+		 this.t = new Plateau();
+
 		//Assigner la main Generé à la main affiché
 		try{
-			lettre0.setText(mainApp.getPartie().getParticipants().get(0).getMain().get(0).getLettre());
-			lettre1.setText(mainApp.getPartie().getParticipants().get(0).getMain().get(1).getLettre());
-			lettre2.setText(mainApp.getPartie().getParticipants().get(0).getMain().get(2).getLettre());
-			lettre3.setText(mainApp.getPartie().getParticipants().get(0).getMain().get(3).getLettre());
-			lettre4.setText(mainApp.getPartie().getParticipants().get(0).getMain().get(4).getLettre());
-			lettre5.setText(mainApp.getPartie().getParticipants().get(0).getMain().get(5).getLettre());
-			lettre6.setText(mainApp.getPartie().getParticipants().get(0).getMain().get(6).getLettre());
+			String stck = Character.toString(mainApp.getPartie().getParticipants().get(0).getMain().get(0).getLettre());
+			lettre0.setText(stck);
+			 stck = Character.toString(mainApp.getPartie().getParticipants().get(0).getMain().get(1).getLettre());
+			lettre1.setText(stck);
+			stck = Character.toString(mainApp.getPartie().getParticipants().get(0).getMain().get(2).getLettre());
+			lettre2.setText(stck);
+			 stck = Character.toString(mainApp.getPartie().getParticipants().get(0).getMain().get(3).getLettre());
+			lettre3.setText(stck);
+			 stck = Character.toString(mainApp.getPartie().getParticipants().get(0).getMain().get(4).getLettre());
+			lettre4.setText(stck);
+			 stck = Character.toString(mainApp.getPartie().getParticipants().get(0).getMain().get(5).getLettre());
+			lettre5.setText(stck);
+			 stck = Character.toString(mainApp.getPartie().getParticipants().get(0).getMain().get(6).getLettre());
+			lettre6.setText(stck);
 			}
 			catch(Exception e){
 				e.printStackTrace();
@@ -97,6 +106,7 @@ public class ViewController {
 		    }
 		    event.consume();
 		});
+		
 		 for (int i = 0; i < 15; i++) {
 	            for (int j = 0; j < 15; j++) {
 
@@ -113,20 +123,17 @@ public class ViewController {
 	                    //Get the dragboard back
 	                    Dragboard db = event.getDragboard();
 	                    boolean success = false;
-	                   
+	                    Node noeud = this.node;
+	                    
 	                    //Could have some more thorough checks of course.
 	                    if (db.hasString()) {
 	                        //Get the textarea and place it into flowPane2 instead
-	                    	
-	                    	mainApp.getGP().add(this.node, l, k);
-	                        char temp = this.node.toString().charAt(11);
-	                    	String temp2 = Character.toString(temp);
-	                    	tableJeu[l][k].setContenu(new Piece(temp2));
-	                    	
-	                    	System.out.println(tableJeu[l][k]);
-	                		
-	                    	
+	                    	mainApp.getGP().add(noeud, l, k);
+		                    char temp = noeud.toString().charAt(11);
+		                    tableJeu[l][k] = temp;
+		                    System.out.println(tableJeu[l][k]);
 		                    success = true;
+		                    
 
 	                    }
 	                    //Complete and consume the event.
@@ -136,8 +143,18 @@ public class ViewController {
 	               
 	                    }
 	            }
+		 
+		 
 	        }
-	
+
+	public void up(char[][] P){
+		for(int i = 0;i<this.t.getTaille();i++)
+			for(int j=0;j<this.t.getTaille();j++){
+				String s = "" + P[i][j];
+				System.out.println("a");
+				this.t.getMatrice()[i][j].getContenu().setLettre('a');
+			}
+	}
 	public void OnDragDetected(MouseEvent event){
 		try{
 		  this.node = (Text)event.getPickResult().getIntersectedNode();;
@@ -190,8 +207,5 @@ public class ViewController {
 	}
 		
 		
-		public Case[][] getTableJeu() {
-			return tableJeu;
-		}
-
+	
 }
