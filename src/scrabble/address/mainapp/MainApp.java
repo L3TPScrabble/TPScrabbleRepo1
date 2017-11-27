@@ -38,6 +38,7 @@ import javafx.stage.Stage;
 import scrabble.address.model.Joueur;
 import scrabble.address.model.Partie;
 import scrabble.address.model.Piece;
+import scrabble.address.model.Plateau;
 import scrabble.address.model.Sac;
 import scrabble.address.view.ViewController;
 
@@ -77,8 +78,8 @@ public class MainApp extends Application {
         
         initScene1();
         initRootLayout();
+        Plateau P1 = new Plateau();
         
-
         showHandOverview();
         primaryStage.setScene(scene1);
         primaryStage.show();

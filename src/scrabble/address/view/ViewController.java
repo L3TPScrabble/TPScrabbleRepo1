@@ -76,7 +76,7 @@ public class ViewController {
 	
 	public void setMainApp(MainApp mainApp){
 		this.mainApp = mainApp;
-		char tableJeu[][] = new char[15][15];
+		Case tableJeu[][] = new Case[15][15];
 		 this.t = new Plateau();
 
 		//Assigner la main Generé à la main affiché
@@ -130,8 +130,11 @@ public class ViewController {
 	                        //Get the textarea and place it into flowPane2 instead
 	                    	mainApp.getGP().add(noeud, l, k);
 		                    char temp = noeud.toString().charAt(11);
-		                    tableJeu[l][k] = temp;
-		                    System.out.println(tableJeu[l][k]);
+		                    Case C1 = new Case();
+		    				Piece P1 = new Piece(temp);
+		    				C1.setContenu(P1);
+		    				mainApp.getPartie().getPlateau().getMatrice()[l][k] = C1;
+		                    System.out.println(mainApp.getPartie().getPlateau().getMatrice()[k][l].getContenu().getLettre());
 		                    success = true;
 		                    
 

@@ -140,6 +140,9 @@ public class Partie implements PartieInterface{
 		// TODO Auto-generated method stub
 		
 	}
+	public Plateau getPlateau() {
+		return plateau;
+	}
 
 	
 

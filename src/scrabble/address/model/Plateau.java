@@ -191,9 +191,29 @@ public class Plateau extends Application implements PlateauInterface{
         primaryStage.setScene(scene);
         primaryStage.show();
     }
+	public void plateauRemp(char[][] tableau){
+		for(int i=0;i<15;i++){
+			for(int j=0;j<15;j++){
+				Case C1 = new Case();
+				Piece P1 = new Piece(tableau[i][j]);
+				C1.setContenu(P1);
+				this.matrice[i][j] = C1;
+
+			}
+		}
+	}
 
     public static void main(String[] args) {    
-        launch(args);
+       // launch(args);
+    	Plateau P1 = new Plateau();
+    	char[][] tableau = new char[15][15];
+    	tableau[10][10] = 'a';
+    	P1.plateauRemp(tableau);
+    	for(int i=0;i<15;i++){
+    		for(int j=0;j<15;j++){
+    			System.out.println(P1.getMatrice()[i][j].getContenu().getLettre());
+    		}
+    	}
     }
 
 	@Override
