@@ -136,8 +136,6 @@ public class ViewController {
 		    				mainApp.getPartie().getPlateau().getMatrice()[l][k] = C1;
 		                    System.out.println(mainApp.getPartie().getPlateau().getMatrice()[k][l].getContenu().getLettre());
 		                    success = true;
-		                    
-
 	                    }
 	                    //Complete and consume the event.
 	                    event.setDropCompleted(success);

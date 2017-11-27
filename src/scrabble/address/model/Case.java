@@ -38,8 +38,8 @@ public class Case extends Plateau implements CaseInterface{
 	public boolean isJouable() {
 		return jouable;
 	}
-	public void setJouable(Case c) {
-		c.jouable = true;
+	public void setJouable(boolean b) {
+		this.jouable = true;
 	}
 
 	

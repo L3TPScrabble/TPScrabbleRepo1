@@ -28,6 +28,10 @@ public class Plateau extends Application implements PlateauInterface{
 	public Plateau() {
 		this.taille = 15;
 		this.matrice = new Case[taille][taille];
+		initMatrice();
+	}
+	public void initMatrice(){
+		this.matrice[7][7].setJouable(true);
 	}
 	
 	public Boolean estPlein() {

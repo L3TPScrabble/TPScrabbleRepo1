@@ -30,6 +30,14 @@ public class Partie implements PartieInterface{
 	}
 
 
+	public Boolean Jouer(int i,int j){
+		if(this.plateau.getMatrice()[i][j].isJouable() == true){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
 	
 	public void newMot() {
 		
