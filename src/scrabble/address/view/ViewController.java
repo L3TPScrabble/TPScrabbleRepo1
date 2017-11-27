@@ -37,9 +37,7 @@ public class ViewController {
 	
 	@FXML
 	private Label lettre0;
-	
-	private Plateau t;
-	
+		
 	@FXML
 	private Label lettre1;
 
@@ -76,8 +74,6 @@ public class ViewController {
 	
 	public void setMainApp(MainApp mainApp){
 		this.mainApp = mainApp;
-		Case tableJeu[][] = new Case[15][15];
-		 this.t = new Plateau();
 
 		//Assigner la main Generé à la main affiché
 		try{
@@ -128,6 +124,7 @@ public class ViewController {
 	                    //Could have some more thorough checks of course.
 	                    if (db.hasString()) {
 	                        //Get the textarea and place it into flowPane2 instead
+	                    	if(mainApp.getPartie().getPlateau().getMatrice()[l][k].isJouable()){
 	                    	mainApp.getGP().add(noeud, l, k);
 		                    char temp = noeud.toString().charAt(11);
 		                    Case C1 = new Case();
@@ -136,6 +133,7 @@ public class ViewController {
 		    				mainApp.getPartie().getPlateau().getMatrice()[l][k] = C1;
 		                    System.out.println(mainApp.getPartie().getPlateau().getMatrice()[k][l].getContenu().getLettre());
 		                    success = true;
+	                    	}
 	                    }
 	                    //Complete and consume the event.
 	                    event.setDropCompleted(success);
@@ -148,14 +146,6 @@ public class ViewController {
 		 
 	        }
 
-	public void up(char[][] P){
-		for(int i = 0;i<this.t.getTaille();i++)
-			for(int j=0;j<this.t.getTaille();j++){
-				String s = "" + P[i][j];
-				System.out.println("a");
-				this.t.getMatrice()[i][j].getContenu().setLettre('a');
-			}
-	}
 	public void OnDragDetected(MouseEvent event){
 		try{
 		  this.node = (Text)event.getPickResult().getIntersectedNode();;

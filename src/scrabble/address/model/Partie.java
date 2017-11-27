@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import scrabble.address.model.Case;
 import interfaces.JoueurInterface;
 import interfaces.PartieInterface;
 import javafx.fxml.FXMLLoader;
@@ -24,9 +25,14 @@ public class Partie implements PartieInterface{
 	
 
 	public Partie() {
+		
+		Case c1 = new Case();
+		c1.setJouable(true);
 		this.participants = new ArrayList<Joueur>();
 		this.sac = new Sac();
 		this.plateau = new Plateau();
+		this.plateau.setCase(c1,7,7);
+		
 	}
 
 

@@ -28,12 +28,10 @@ public class Plateau extends Application implements PlateauInterface{
 	public Plateau() {
 		this.taille = 15;
 		this.matrice = new Case[taille][taille];
-		initMatrice();
+		
 	}
-	public void initMatrice(){
-		this.matrice[7][7].setJouable(true);
-	}
-	
+
+
 	public Boolean estPlein() {
 		for(int i=0; i<15 ; i++)
 			for(int j=0; j<15; j++)
@@ -128,6 +126,10 @@ public class Plateau extends Application implements PlateauInterface{
 			}
 		}
 	}*/
+	
+	public Case getCase(int i , int j ){
+		return this.matrice[i][j];
+	}
 	public Case[][] getMatrice() {
 		return matrice;
 	}
@@ -207,18 +209,9 @@ public class Plateau extends Application implements PlateauInterface{
 		}
 	}
 
-    public static void main(String[] args) {    
-       // launch(args);
-    	Plateau P1 = new Plateau();
-    	char[][] tableau = new char[15][15];
-    	tableau[10][10] = 'a';
-    	P1.plateauRemp(tableau);
-    	for(int i=0;i<15;i++){
-    		for(int j=0;j<15;j++){
-    			System.out.println(P1.getMatrice()[i][j].getContenu().getLettre());
-    		}
-    	}
-    }
+	public void setCase(Case C , int i , int j){
+		this.matrice[i][j] = C;
+	}
 
 	@Override
 	public void addMot(String mot, int i, int j, String d) {

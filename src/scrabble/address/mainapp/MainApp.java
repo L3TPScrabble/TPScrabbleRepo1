@@ -78,7 +78,6 @@ public class MainApp extends Application {
         
         initScene1();
         initRootLayout();
-        Plateau P1 = new Plateau();
         
         showHandOverview();
         primaryStage.setScene(scene1);

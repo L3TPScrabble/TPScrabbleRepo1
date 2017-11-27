@@ -7,11 +7,21 @@ public class Case extends Plateau implements CaseInterface{
 	private boolean estVide;
 	private Piece contenu;
 	private boolean jouable;
+	private int x;
+	private int y;
 	
 	public Case() {
 		this.id = 0;
 		this.estVide = true;
 		this.contenu = null;
+		
+	}
+	public Case(int x , int y) {
+		this.id = 0;
+		this.estVide = true;
+		this.contenu = null;
+		this.x = x;
+		this.y = y;
 		
 	}
 	public Case(int id) {
