@@ -34,16 +34,7 @@ public class Partie implements PartieInterface{
 		this.plateau.setCase(c1,7,7);
 		
 	}
-
-
-	public Boolean Jouer(int i,int j){
-		if(this.plateau.getMatrice()[i][j].isJouable() == true){
-			return true;
-		}
-		else{
-			return false;
-		}
-	}
+	
 	
 	public void newMot() {
 		
@@ -77,27 +68,16 @@ public class Partie implements PartieInterface{
 		return participants;
 	}
 
-	public static void main(String[] args) {
-		/*PartieInterface game = new Partie();
-		game.newJoueur();
-		game.newJoueur();
-		for(Joueur j : joueurs)
-			System.out.println(j.getId() + j.getPseudo());
-		System.out.println(sac.getPiecesRestantes());
-		tourDePioche();
-		afficherMain(1);
-		System.out.println(sac.getPiecesRestantes());*/
-
-		/*	  Plateau plateau = new Plateau();
-			    
-			    JFrame frame = new JFrame();
-			    frame.setContentPane(plateau.getTotal());
-			    frame.pack();
-			    frame.setVisible(true);
-			  }       */
-		//Fenetre fen = new Fenetre();
-		
-	}
+	public void coupJoue(int x,int y){
+		Case c1 = new Case();
+		c1.setJouable(true);
+		for(int i = -1;i<=1;i++){
+				this.plateau.setCase(c1,x+i,y);
+				this.plateau.setCase(c1, x, y+i);
+			}
+		}
+	
+	
 	
 	
 

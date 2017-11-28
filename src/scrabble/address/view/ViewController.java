@@ -107,8 +107,8 @@ public class ViewController {
 	            for (int j = 0; j < 15; j++) {
 
 	                Label label = new Label();
-	                GridPane.setRowIndex(label, i);
-	                GridPane.setColumnIndex(label, j);
+	                GridPane.setColumnIndex(label, i);
+	                GridPane.setRowIndex(label, j);
 	                mainApp.getGP().getChildren().add(label);
 	                label.setPrefSize(50, 50);
 	               
@@ -123,16 +123,17 @@ public class ViewController {
 	                    
 	                    //Could have some more thorough checks of course.
 	                    if (db.hasString()) {
-	                        //Get the textarea and place it into flowPane2 instead
-	                    	if(mainApp.getPartie().getPlateau().getMatrice()[l][k].isJouable()){
-	                    	mainApp.getGP().add(noeud, l, k);
-		                    char temp = noeud.toString().charAt(11);
-		                    Case C1 = new Case();
-		    				Piece P1 = new Piece(temp);
-		    				C1.setContenu(P1);
-		    				mainApp.getPartie().getPlateau().getMatrice()[l][k] = C1;
-		                    System.out.println(mainApp.getPartie().getPlateau().getMatrice()[k][l].getContenu().getLettre());
-		                    success = true;
+		                        //Get the textarea and place it into flowPane2 instead
+		                    	if(mainApp.getPartie().getPlateau().getMatrice()[l][k].isJouable()){
+		                    	mainApp.getGP().add(noeud, k, l);
+			                    char temp = noeud.toString().charAt(11);
+			                    Case C1 = new Case();
+			    				Piece P1 = new Piece(temp);
+			    				C1.setContenu(P1);
+			    				mainApp.getPartie().getPlateau().getMatrice()[k][l] = C1;
+			    				mainApp.getPartie().coupJoue(k,l);
+			                    System.out.println(mainApp.getPartie().getPlateau().getMatrice()[k][l].getContenu().getLettre());
+			                    success = true;
 	                    	}
 	                    }
 	                    //Complete and consume the event.
