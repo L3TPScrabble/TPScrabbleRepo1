@@ -2,7 +2,6 @@ package interfaces;
 
 public interface PartieInterface {
 	
-
 	public void newMot();
 	public void newJoueur();
 	public void newPartie();
