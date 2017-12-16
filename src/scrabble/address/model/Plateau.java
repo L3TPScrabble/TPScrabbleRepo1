@@ -197,7 +197,7 @@ public class Plateau extends Application implements PlateauInterface{
         primaryStage.setScene(scene);
         primaryStage.show();
     }
-	public void plateauRemp(char[][] tableau){
+/*	public void plateauRemp(char[][] tableau){
 		for(int i=0;i<15;i++){
 			for(int j=0;j<15;j++){
 				Case C1 = new Case();
@@ -207,7 +207,7 @@ public class Plateau extends Application implements PlateauInterface{
 
 			}
 		}
-	}
+	}*/
 
 	public void setCase(Case C , int i , int j){
 		this.matrice[i][j] = C;

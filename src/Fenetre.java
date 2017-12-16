@@ -28,9 +28,9 @@ public class Fenetre extends JFrame{
 		this.setTitle("Scrabble");
 		this.setSize(1000,800);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setLocationRelativeTo(null);
 		this.setVisible(true);
-		
+		this.setLocation(null);
+
 		accueil.setLayout(null);
 		accueil.setBackground(Color.white);
 		

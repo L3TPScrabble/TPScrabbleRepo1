@@ -176,7 +176,7 @@ public class MainApp extends Application {
         pane1.setTop(pane2);
         pane1.setCenter(pane3);
 
-        scene1 = new Scene(pane1,1200,1000);
+        scene1 = new Scene(pane1,800,800);
 	}
 	
 	

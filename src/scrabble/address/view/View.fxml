@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.Pane?>
@@ -68,4 +69,11 @@
          </children>
       </Pane>
    </bottom>
+   <right>
+      <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="btnNewPlayer" layoutX="48.0" layoutY="300.0" mnemonicParsing="false" onAction="#ButtonClicked2" text="Passer le tour" />
+         </children>
+      </Pane>
+   </right>
 </BorderPane>

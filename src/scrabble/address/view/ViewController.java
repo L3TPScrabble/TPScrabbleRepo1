@@ -4,6 +4,7 @@ import java.lang.reflect.InvocationTargetException;
 
 import javax.swing.GroupLayout.Alignment;
 
+import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -11,6 +12,7 @@ import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.DragEvent;
@@ -36,6 +38,10 @@ public class ViewController {
 	private BorderPane bp;
 	
 	@FXML
+	private Button btnNewPlayer;
+	
+	private String labelNameStock;
+	@FXML
 	private Label lettre0;
 		
 	@FXML
@@ -45,6 +51,8 @@ public class ViewController {
 	private Label lettre2;
 	@FXML
 	private Pane pane1;
+	@FXML 
+	private Pane pane2;
 	@FXML
 	private Label lettre3;
 	
@@ -57,6 +65,8 @@ public class ViewController {
 	
 	@FXML
 	private Label lettre6;
+	
+	private int joueurActuel = 0;
 	
 	private MainApp mainApp;
 	
@@ -74,7 +84,7 @@ public class ViewController {
 	
 	public void setMainApp(MainApp mainApp){
 		this.mainApp = mainApp;
-
+		
 		//Assigner la main Generé à la main affiché
 		try{
 			String stck = Character.toString(mainApp.getPartie().getParticipants().get(0).getMain().get(0).getLettre());
@@ -120,9 +130,10 @@ public class ViewController {
 	                    Dragboard db = event.getDragboard();
 	                    boolean success = false;
 	                    Node noeud = this.node;
-	                    
+	                   
 	                    //Could have some more thorough checks of course.
 	                    if (db.hasString()) {
+	                    	
 		                        //Get the textarea and place it into flowPane2 instead
 		                    	if(mainApp.getPartie().getPlateau().getMatrice()[l][k].isJouable()){
 		                    	mainApp.getGP().add(noeud, k, l);
@@ -130,15 +141,19 @@ public class ViewController {
 			                    Case C1 = new Case();
 			    				Piece P1 = new Piece(temp);
 			    				C1.setContenu(P1);
-			    				mainApp.getPartie().getPlateau().getMatrice()[k][l] = C1;
-			    				mainApp.getPartie().coupJoue(k,l);
-			                    System.out.println(mainApp.getPartie().getPlateau().getMatrice()[k][l].getContenu().getLettre());
+			    				mainApp.getPartie().getPlateau().setCase(C1,l,k);
+			    				System.out.println("La lettre joué est :"+mainApp.getPartie().getPlateau().getCase(l,k).getContenu().getLettre());
+			    				mainApp.getPartie().coupJoue(l,k);
 			                    success = true;
+
+
 	                    	}
 	                    }
 	                    //Complete and consume the event.
 	                    event.setDropCompleted(success);
 	                    event.consume();
+	    				supprimerTexteLabel(this.labelNameStock);
+
 	                });
 	               
 	                    }
@@ -149,48 +164,78 @@ public class ViewController {
 
 	public void OnDragDetected(MouseEvent event){
 		try{
-		  this.node = (Text)event.getPickResult().getIntersectedNode();;
-		  Dragboard db = lettre0.startDragAndDrop(TransferMode.MOVE);
-
+		  this.node = (Text)event.getPickResult().getIntersectedNode(); 
+		  Dragboard db = this.node.startDragAndDrop(TransferMode.MOVE);
+		  	
 		    // Put a string on a dragboard as an identifier
-		    ClipboardContent content = new ClipboardContent();
+		  	ClipboardContent content = new ClipboardContent();
+			this.labelNameStock = event.getSource().toString();
+
 		    content.putString(this.node.toString());
 		    db.setContent(content);
+		    
 		    //Consume the event
 		    event.consume();
+		    
 		}
 		catch(ClassCastException i){
 			System.out.println("Glissez la lettre sur le terrain");
+			System.out.println("Label text"+event.getSource().toString());
 		}
 	}
-	public void DRAG_DROPPED(DragEvent event){
-		
-		    //Get the dragboard back
-			Dragboard db = event.getDragboard();
+	
+public void supprimerTexteLabel(String label){
+		String a = "";
+		for(int i=9;i<16;i++){
+			a = a + label.charAt(i);
 			
-		    boolean success = false;
-		    for( Node node: mainApp.getGP().getChildren()) {
+		}
+ 		
+		if(a.contains("lettre0")){
+			
+			lettre0 = new Label();
+			
+			mainApp.getPartie().getParticipants().get(0).getMain().get(0).setLettre('\0');
 
-                if( node instanceof Label) {
-                    if( node.getBoundsInParent().contains(event.getSceneX(),  event.getSceneY())) {
-                    
-                        System.out.println( "Node: " + node + " at " + GridPane.getRowIndex( node) + "/" + GridPane.getColumnIndex( node));
-                    }
-                }
-		    }
-		    //Could have some more thorough checks of course.
-		    if (db.hasString()) {
-		        //Get the textarea and place it into flowPane2 instead
-		    	int i = (int) event.getSceneX();
-            	int j = (int) event.getSceneY();
-            	mainApp.getGP().add(this.node, i, j);
-		        success = true;
-		    }
-		    //Complete and consume the event.
-		    event.setDropCompleted(success);
-		    event.consume();
+		}
+		if(a.contains("lettre1")){
+	//		lettre1 = new Label();
+			mainApp.getPartie().getParticipants().get(0).getMain().get(1).setLettre('\0');
+
+		}
+		if(a.contains("lettre2")){
+	//		lettre2 = new Label();
+			mainApp.getPartie().getParticipants().get(0).getMain().get(2).setLettre('\0');
+
+
+		}
+		if(a.contains("lettre3")){
+	//		lettre3 = new Label();
+			mainApp.getPartie().getParticipants().get(0).getMain().get(3).setLettre('\0');
+
+
+		}
+		if(a.contains("lettre4")){
+	//		lettre4 = new Label();
+			mainApp.getPartie().getParticipants().get(0).getMain().get(4).setLettre('\0');
+
+		}
+		if(a.contains("lettre5")){
+	//		lettre5 = new Label();
+			mainApp.getPartie().getParticipants().get(0).getMain().get(5).setLettre('\0');
+
+
+		}
+		if(a.contains("lettre6")){
+	//		lettre6 = new Label();
+			mainApp.getPartie().getParticipants().get(0).getMain().get(6).setLettre('\0');
+
+
+		}
+		
+		
 	}
-		public void OVER(DragEvent event){
+	public void OVER(DragEvent event){
 	    if (event.getGestureSource() != mainApp.getGP()
 	            && event.getDragboard().hasString()) {
 	        event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
@@ -199,5 +244,68 @@ public class ViewController {
 	}
 		
 		
-	
+public void ButtonClicked2(ActionEvent e) {
+		int compteur=joueurActuel;
+		int nombreJoueur = mainApp.getPartie().getParticipants().size();
+		System.out.println("Il y a : "+nombreJoueur);
+
+		if(e.getSource()==btnNewPlayer)
+		{
+			System.out.println(lettre0.getText());
+			
+			if(mainApp.getPartie().getParticipants().get(compteur).getMain().get(0).getLettre() == '\0'){
+				mainApp.getPartie().getParticipants().get(compteur).getMain().get(0).setLettre(mainApp.getPartie().getSac().piocher().getLettre());
+				lettre0.setText(Character.toString(mainApp.getPartie().getParticipants().get(compteur).getMain().get(0).getLettre()));
+				System.out.println("bite");
+			}
+			if(mainApp.getPartie().getParticipants().get(compteur).getMain().get(1).getLettre() == '\0'){
+				mainApp.getPartie().getParticipants().get(compteur).getMain().get(1).setLettre(mainApp.getPartie().getSac().piocher().getLettre());
+				lettre1.setText(Character.toString(mainApp.getPartie().getParticipants().get(compteur).getMain().get(1).getLettre()));
+			}
+			if(mainApp.getPartie().getParticipants().get(compteur).getMain().get(2).getLettre() == '\0'){
+				mainApp.getPartie().getParticipants().get(compteur).getMain().get(2).setLettre(mainApp.getPartie().getSac().piocher().getLettre());
+				lettre2.setText(Character.toString(mainApp.getPartie().getParticipants().get(compteur).getMain().get(2).getLettre()));
+			}
+			if(mainApp.getPartie().getParticipants().get(compteur).getMain().get(3).getLettre() == '\0'){
+				mainApp.getPartie().getParticipants().get(compteur).getMain().get(3).setLettre(mainApp.getPartie().getSac().piocher().getLettre());
+				lettre3.setText(Character.toString(mainApp.getPartie().getParticipants().get(compteur).getMain().get(3).getLettre()));
+			}
+			if(mainApp.getPartie().getParticipants().get(compteur).getMain().get(4).getLettre() == '\0'){
+				mainApp.getPartie().getParticipants().get(compteur).getMain().get(4).setLettre(mainApp.getPartie().getSac().piocher().getLettre());
+				lettre4.setText(Character.toString(mainApp.getPartie().getParticipants().get(compteur).getMain().get(4).getLettre()));
+			}
+			if(mainApp.getPartie().getParticipants().get(compteur).getMain().get(5).getLettre() == '\0'){
+				mainApp.getPartie().getParticipants().get(compteur).getMain().get(5).setLettre(mainApp.getPartie().getSac().piocher().getLettre());
+				lettre5.setText(Character.toString(mainApp.getPartie().getParticipants().get(compteur).getMain().get(5).getLettre()));
+			}
+			if(mainApp.getPartie().getParticipants().get(compteur).getMain().get(0).getLettre() == '\0'){
+				mainApp.getPartie().getParticipants().get(compteur).getMain().get(6).setLettre(mainApp.getPartie().getSac().piocher().getLettre());
+				lettre6.setText(Character.toString(mainApp.getPartie().getParticipants().get(compteur).getMain().get(6).getLettre()));
+			}
+			try{
+				joueurActuel = joueurActuel+1;
+				compteur=joueurActuel;
+				if(joueurActuel == nombreJoueur)
+					joueurActuel = 0;
+			lettre0.setText(Character.toString(mainApp.getPartie().getParticipants().get(compteur).getMain().get(0).getLettre()));
+			lettre1.setText(Character.toString(mainApp.getPartie().getParticipants().get(compteur).getMain().get(1).getLettre()));
+			lettre2.setText(Character.toString(mainApp.getPartie().getParticipants().get(compteur).getMain().get(2).getLettre()));
+			lettre3.setText(Character.toString(mainApp.getPartie().getParticipants().get(compteur).getMain().get(3).getLettre()));
+			lettre4.setText(Character.toString(mainApp.getPartie().getParticipants().get(compteur).getMain().get(4).getLettre()));
+			lettre5.setText(Character.toString(mainApp.getPartie().getParticipants().get(compteur).getMain().get(5).getLettre()));
+			lettre6.setText(Character.toString(mainApp.getPartie().getParticipants().get(compteur).getMain().get(6).getLettre()));
+			
+			}catch(Exception i){
+				compteur = 0;
+				lettre0.setText(Character.toString(mainApp.getPartie().getParticipants().get(compteur).getMain().get(0).getLettre()));
+				lettre1.setText(Character.toString(mainApp.getPartie().getParticipants().get(compteur).getMain().get(1).getLettre()));
+				lettre2.setText(Character.toString(mainApp.getPartie().getParticipants().get(compteur).getMain().get(2).getLettre()));
+				lettre3.setText(Character.toString(mainApp.getPartie().getParticipants().get(compteur).getMain().get(3).getLettre()));
+				lettre4.setText(Character.toString(mainApp.getPartie().getParticipants().get(compteur).getMain().get(4).getLettre()));
+				lettre5.setText(Character.toString(mainApp.getPartie().getParticipants().get(compteur).getMain().get(5).getLettre()));
+				lettre6.setText(Character.toString(mainApp.getPartie().getParticipants().get(compteur).getMain().get(6).getLettre()));
+			}
+			
+		}
+	}
 }

@@ -27,10 +27,15 @@ public class Partie implements PartieInterface{
 	public Partie() {
 		
 		Case c1 = new Case();
+		Case c2 = new Case();
 		c1.setJouable(true);
 		this.participants = new ArrayList<Joueur>();
 		this.sac = new Sac();
 		this.plateau = new Plateau();
+		for(int i=0;i<this.plateau.getTaille();i++){
+			for(int j=0;j<this.plateau.getTaille();j++)
+				this.plateau.setCase(c2, i, j);
+		}
 		this.plateau.setCase(c1,7,7);
 		
 	}
@@ -73,7 +78,7 @@ public class Partie implements PartieInterface{
 		c1.setJouable(true);
 		for(int i = -1;i<=1;i++){
 				this.plateau.setCase(c1,x+i,y);
-				this.plateau.setCase(c1, x, y+i);
+				this.plateau.setCase(c1,x, y+i);
 			}
 		}
 	
