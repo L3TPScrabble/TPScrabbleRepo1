@@ -329,7 +329,7 @@ public class MainApp extends Application {
                  
              }
          }
-
+         
          grid.setPadding(new Insets(50, 10 , 10, 10));
          this.GP = grid;
          grid.setGridLinesVisible(true);		//Affiche les ligne de la grille

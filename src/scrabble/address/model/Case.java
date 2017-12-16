@@ -7,6 +7,7 @@ public class Case extends Plateau implements CaseInterface{
 	private boolean estVide;
 	private Piece contenu;
 	private boolean jouable;
+	private boolean pleine;
 	private int x;
 	private int y;
 	
@@ -35,6 +36,7 @@ public class Case extends Plateau implements CaseInterface{
 		return this.estVide;
 	}
 	
+	
 	public Piece getContenu()
 	{
 		return contenu;
@@ -45,6 +47,18 @@ public class Case extends Plateau implements CaseInterface{
 		contenu = nouveauContenu ;
 	}
 	
+	/**
+	 * @return the pleine
+	 */
+	public boolean isPleine() {
+		return pleine;
+	}
+	/**
+	 * @param pleine the pleine to set
+	 */
+	public void setPleine(boolean pleine) {
+		this.pleine = pleine;
+	}
 	public boolean isJouable() {
 		return jouable;
 	}

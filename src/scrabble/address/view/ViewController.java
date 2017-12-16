@@ -4,6 +4,8 @@ import java.lang.reflect.InvocationTargetException;
 
 import javax.swing.GroupLayout.Alignment;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -14,6 +16,7 @@ import javafx.geometry.VPos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Labeled;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
@@ -23,8 +26,10 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
+import javafx.util.Duration;
 import scrabble.address.mainapp.MainApp;
 import scrabble.address.model.Case;
 import scrabble.address.model.Partie;
@@ -78,13 +83,10 @@ public class ViewController {
 	
 	@FXML
 	private void Initialize(){
-		
-	
 	}
 	
 	public void setMainApp(MainApp mainApp){
 		this.mainApp = mainApp;
-		
 		//Assigner la main Generé à la main affiché
 		try{
 			String stck = Character.toString(mainApp.getPartie().getParticipants().get(0).getMain().get(0).getLettre());
@@ -121,6 +123,8 @@ public class ViewController {
 	                GridPane.setRowIndex(label, j);
 	                mainApp.getGP().getChildren().add(label);
 	                label.setPrefSize(50, 50);
+	                Font font = new Font(20);
+	                label.setFont(font);
 	               
 
 	                int k = i;
@@ -130,35 +134,40 @@ public class ViewController {
 	                    Dragboard db = event.getDragboard();
 	                    boolean success = false;
 	                    Node noeud = this.node;
+	                   Node noeud2;
+	    				
 	                   
 	                    //Could have some more thorough checks of course.
 	                    if (db.hasString()) {
 	                    	
 		                        //Get the textarea and place it into flowPane2 instead
-		                    	if(mainApp.getPartie().getPlateau().getMatrice()[l][k].isJouable()){
-		                    	mainApp.getGP().add(noeud, k, l);
-			                    char temp = noeud.toString().charAt(11);
+		                    	if(mainApp.getPartie().getPlateau().getMatrice()[l][k].isJouable() ){
+			                    mainApp.getPartie().getPlateau().getCase(l,k).setPleine(true);
+		                    	char temp = noeud.toString().charAt(11);
 			                    Case C1 = new Case();
 			    				Piece P1 = new Piece(temp);
 			    				C1.setContenu(P1);
+			    				C1.setJouable(false);
 			    				mainApp.getPartie().getPlateau().setCase(C1,l,k);
-			    				System.out.println("La lettre joué est :"+mainApp.getPartie().getPlateau().getCase(l,k).getContenu().getLettre());
-			    				mainApp.getPartie().coupJoue(l,k);
-			                    success = true;
+		                    	mainApp.getGP().add(noeud, k, l);
+			    				label.setText(Character.toString(mainApp.getPartie().getPlateau().getCase(l, k).getContenu().getLettre()));
 
+			    				System.out.println("La lettre jaoué est :"+mainApp.getPartie().getPlateau().getCase(l,k).getContenu().getLettre());
+			    				mainApp.getPartie().coupJoue(l,k);
+			    				supprimerTexteLabel(this.labelNameStock);
+			                    success = true;
+			                    
 
 	                    	}
 	                    }
 	                    //Complete and consume the event.
 	                    event.setDropCompleted(success);
 	                    event.consume();
-	    				supprimerTexteLabel(this.labelNameStock);
 
 	                });
 	               
 	                    }
 	            }
-		 
 		 
 	        }
 
@@ -170,12 +179,12 @@ public class ViewController {
 		    // Put a string on a dragboard as an identifier
 		  	ClipboardContent content = new ClipboardContent();
 			this.labelNameStock = event.getSource().toString();
-
 		    content.putString(this.node.toString());
 		    db.setContent(content);
 		    
 		    //Consume the event
 		    event.consume();
+			
 		    
 		}
 		catch(ClassCastException i){
@@ -193,41 +202,33 @@ public void supprimerTexteLabel(String label){
  		
 		if(a.contains("lettre0")){
 			
-			lettre0 = new Label();
-			
 			mainApp.getPartie().getParticipants().get(0).getMain().get(0).setLettre('\0');
 
 		}
 		if(a.contains("lettre1")){
-	//		lettre1 = new Label();
 			mainApp.getPartie().getParticipants().get(0).getMain().get(1).setLettre('\0');
 
 		}
 		if(a.contains("lettre2")){
-	//		lettre2 = new Label();
 			mainApp.getPartie().getParticipants().get(0).getMain().get(2).setLettre('\0');
 
 
 		}
 		if(a.contains("lettre3")){
-	//		lettre3 = new Label();
 			mainApp.getPartie().getParticipants().get(0).getMain().get(3).setLettre('\0');
 
 
 		}
 		if(a.contains("lettre4")){
-	//		lettre4 = new Label();
 			mainApp.getPartie().getParticipants().get(0).getMain().get(4).setLettre('\0');
 
 		}
 		if(a.contains("lettre5")){
-	//		lettre5 = new Label();
 			mainApp.getPartie().getParticipants().get(0).getMain().get(5).setLettre('\0');
 
 
 		}
 		if(a.contains("lettre6")){
-	//		lettre6 = new Label();
 			mainApp.getPartie().getParticipants().get(0).getMain().get(6).setLettre('\0');
 
 
@@ -256,7 +257,6 @@ public void ButtonClicked2(ActionEvent e) {
 			if(mainApp.getPartie().getParticipants().get(compteur).getMain().get(0).getLettre() == '\0'){
 				mainApp.getPartie().getParticipants().get(compteur).getMain().get(0).setLettre(mainApp.getPartie().getSac().piocher().getLettre());
 				lettre0.setText(Character.toString(mainApp.getPartie().getParticipants().get(compteur).getMain().get(0).getLettre()));
-				System.out.println("bite");
 			}
 			if(mainApp.getPartie().getParticipants().get(compteur).getMain().get(1).getLettre() == '\0'){
 				mainApp.getPartie().getParticipants().get(compteur).getMain().get(1).setLettre(mainApp.getPartie().getSac().piocher().getLettre());
@@ -278,7 +278,7 @@ public void ButtonClicked2(ActionEvent e) {
 				mainApp.getPartie().getParticipants().get(compteur).getMain().get(5).setLettre(mainApp.getPartie().getSac().piocher().getLettre());
 				lettre5.setText(Character.toString(mainApp.getPartie().getParticipants().get(compteur).getMain().get(5).getLettre()));
 			}
-			if(mainApp.getPartie().getParticipants().get(compteur).getMain().get(0).getLettre() == '\0'){
+			if(mainApp.getPartie().getParticipants().get(compteur).getMain().get(5).getLettre() == '\0'){
 				mainApp.getPartie().getParticipants().get(compteur).getMain().get(6).setLettre(mainApp.getPartie().getSac().piocher().getLettre());
 				lettre6.setText(Character.toString(mainApp.getPartie().getParticipants().get(compteur).getMain().get(6).getLettre()));
 			}
