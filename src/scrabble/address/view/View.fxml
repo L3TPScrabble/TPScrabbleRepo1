@@ -6,9 +6,9 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="bp" prefHeight="800.0" prefWidth="1000.0" stylesheets="@game-grid.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="scrabble.address.view.ViewController">
+<BorderPane fx:id="bp" prefHeight="800.0" prefWidth="1000.0" stylesheets="@game-grid.css" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="scrabble.address.view.ViewController">
    <bottom>
-      <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <Pane prefHeight="241.0" prefWidth="1000.0" BorderPane.alignment="CENTER">
          <children>
             <Pane fx:id="pane1" prefHeight="110.0" prefWidth="110.0" style="-fx-background-color: WHITE;">
                <children>
@@ -73,6 +73,8 @@
       <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
             <Button fx:id="btnNewPlayer" layoutX="48.0" layoutY="300.0" mnemonicParsing="false" onAction="#ButtonClicked2" text="Passer le tour" />
+            <Label fx:id="score" layoutX="141.0" layoutY="506.0" prefHeight="28.0" prefWidth="43.0" text="Label" />
+            <Label layoutX="14.0" layoutY="503.0" prefHeight="34.0" prefWidth="82.0" text="Votre Score :" />
          </children>
       </Pane>
    </right>

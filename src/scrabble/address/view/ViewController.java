@@ -71,24 +71,31 @@ public class ViewController {
 	@FXML
 	private Label lettre6;
 	
+	@FXML
+	private Label score;
+	
 	private int joueurActuel = 0;
 	
 	private MainApp mainApp;
 	
 	private Node node;
 	
+	
 	public ViewController(){
 		
 	}
+	
 	
 	@FXML
 	private void Initialize(){
 	}
 	
+	
 	public void setMainApp(MainApp mainApp){
 		this.mainApp = mainApp;
-		//Assigner la main Generé à la main affiché
+		//Assigner la main Generée à la main affichée
 		try{
+			score.setText(String.valueOf(mainApp.getPartie().getParticipants().get(0).getScore()));
 			String stck = Character.toString(mainApp.getPartie().getParticipants().get(0).getMain().get(0).getLettre());
 			lettre0.setText(stck);
 			 stck = Character.toString(mainApp.getPartie().getParticipants().get(0).getMain().get(1).getLettre());
@@ -107,16 +114,16 @@ public class ViewController {
 			catch(Exception e){
 				e.printStackTrace();
 			}
-		mainApp.getGP().addEventHandler(DragEvent.DRAG_OVER, (DragEvent event) -> {
-		    if (event.getGestureSource() != mainApp.getGP()
+			mainApp.getGP().addEventHandler(DragEvent.DRAG_OVER, (DragEvent event) -> {
+				if (event.getGestureSource() != mainApp.getGP()
 		            && event.getDragboard().hasString()) {
-		        event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
-		    }
+						event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+				}
 		    event.consume();
-		});
+			});
 		
-		 for (int i = 0; i < 15; i++) {
-	            for (int j = 0; j < 15; j++) {
+		 for (int i = 0; i <= 14; i++) {
+	            for (int j = 0; j <= 14; j++) {
 
 	                Label label = new Label();
 	                GridPane.setColumnIndex(label, i);
@@ -134,7 +141,7 @@ public class ViewController {
 	                    Dragboard db = event.getDragboard();
 	                    boolean success = false;
 	                    Node noeud = this.node;
-	                   Node noeud2;
+	                    Node noeud2;
 	    				
 	                   
 	                    //Could have some more thorough checks of course.
@@ -143,6 +150,7 @@ public class ViewController {
 		                        //Get the textarea and place it into flowPane2 instead
 		                    	if(mainApp.getPartie().getPlateau().getMatrice()[l][k].isJouable() ){
 			                    mainApp.getPartie().getPlateau().getCase(l,k).setPleine(true);
+			                    mainApp.getPartie().getPlateau().getCase(l,k).setHasChanged(true);
 		                    	char temp = noeud.toString().charAt(11);
 			                    Case C1 = new Case();
 			    				Piece P1 = new Piece(temp);
@@ -170,18 +178,19 @@ public class ViewController {
 	            }
 		 
 	        }
-
+	
+	
 	public void OnDragDetected(MouseEvent event){
 		try{
-		  this.node = (Text)event.getPickResult().getIntersectedNode(); 
-		  Dragboard db = this.node.startDragAndDrop(TransferMode.MOVE);
+			this.node = (Text)event.getPickResult().getIntersectedNode(); 
+			Dragboard db = this.node.startDragAndDrop(TransferMode.MOVE);
 		  	
 		    // Put a string on a dragboard as an identifier
 		  	ClipboardContent content = new ClipboardContent();
 			this.labelNameStock = event.getSource().toString();
 		    content.putString(this.node.toString());
 		    db.setContent(content);
-		    
+		    System.out.println("voici le contenu  : \n" + content );
 		    //Consume the event
 		    event.consume();
 			
@@ -193,7 +202,8 @@ public class ViewController {
 		}
 	}
 	
-public void supprimerTexteLabel(String label){
+	
+	public void supprimerTexteLabel(String label){
 		String a = "";
 		for(int i=9;i<16;i++){
 			a = a + label.charAt(i);
@@ -236,22 +246,46 @@ public void supprimerTexteLabel(String label){
 		
 		
 	}
+
 	public void OVER(DragEvent event){
 	    if (event.getGestureSource() != mainApp.getGP()
 	            && event.getDragboard().hasString()) {
-	        event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+	        	event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
 	    }
 	    event.consume();
 	}
 		
 		
-public void ButtonClicked2(ActionEvent e) {
+	public void ButtonClicked2(ActionEvent e) {
 		int compteur=joueurActuel;
 		int nombreJoueur = mainApp.getPartie().getParticipants().size();
+		int i_premier = 0 , i_dernier = 0 , j_premier = 0 , j_dernier = 0;
+		int compteurLettre = 0;
+		boolean premiereLettre = true;
 		System.out.println("Il y a : "+nombreJoueur);
 
 		if(e.getSource()==btnNewPlayer)
 		{
+			//Recuperation des coordonnées de la premiere lettre et de la dernière lettre du mot
+			for (int i = 0; i <= 14; i++) {
+	            for (int j = 0; j <= 14; j++) {
+	            	if(mainApp.getPartie().getPlateau().getCase(i,j).HasChanged() && premiereLettre){
+	            		
+	            		i_premier = i;
+	            		j_premier = j;
+	            		premiereLettre = false;
+	            	}
+	            	else if(mainApp.getPartie().getPlateau().getCase(i,j).HasChanged()){
+	            		i_dernier = i;
+	            		j_dernier = j;
+	            	}
+	            }
+			}
+			//Actualisation du score du joueur
+			mainApp.getPartie().getParticipants().get(compteur).setScore(mainApp.getPartie().getPlateau().score(i_premier, j_premier, i_dernier, j_dernier));			
+			
+			
+			score.setText(String.valueOf(mainApp.getPartie().getParticipants().get(compteur).getScore()));
 			System.out.println(lettre0.getText());
 			
 			if(mainApp.getPartie().getParticipants().get(compteur).getMain().get(0).getLettre() == '\0'){
@@ -287,14 +321,13 @@ public void ButtonClicked2(ActionEvent e) {
 				compteur=joueurActuel;
 				if(joueurActuel == nombreJoueur)
 					joueurActuel = 0;
-			lettre0.setText(Character.toString(mainApp.getPartie().getParticipants().get(compteur).getMain().get(0).getLettre()));
-			lettre1.setText(Character.toString(mainApp.getPartie().getParticipants().get(compteur).getMain().get(1).getLettre()));
-			lettre2.setText(Character.toString(mainApp.getPartie().getParticipants().get(compteur).getMain().get(2).getLettre()));
-			lettre3.setText(Character.toString(mainApp.getPartie().getParticipants().get(compteur).getMain().get(3).getLettre()));
-			lettre4.setText(Character.toString(mainApp.getPartie().getParticipants().get(compteur).getMain().get(4).getLettre()));
-			lettre5.setText(Character.toString(mainApp.getPartie().getParticipants().get(compteur).getMain().get(5).getLettre()));
-			lettre6.setText(Character.toString(mainApp.getPartie().getParticipants().get(compteur).getMain().get(6).getLettre()));
-			
+				lettre0.setText(Character.toString(mainApp.getPartie().getParticipants().get(compteur).getMain().get(0).getLettre()));
+				lettre1.setText(Character.toString(mainApp.getPartie().getParticipants().get(compteur).getMain().get(1).getLettre()));
+				lettre2.setText(Character.toString(mainApp.getPartie().getParticipants().get(compteur).getMain().get(2).getLettre()));
+				lettre3.setText(Character.toString(mainApp.getPartie().getParticipants().get(compteur).getMain().get(3).getLettre()));
+				lettre4.setText(Character.toString(mainApp.getPartie().getParticipants().get(compteur).getMain().get(4).getLettre()));
+				lettre5.setText(Character.toString(mainApp.getPartie().getParticipants().get(compteur).getMain().get(5).getLettre()));
+				lettre6.setText(Character.toString(mainApp.getPartie().getParticipants().get(compteur).getMain().get(6).getLettre()));
 			}catch(Exception i){
 				compteur = 0;
 				lettre0.setText(Character.toString(mainApp.getPartie().getParticipants().get(compteur).getMain().get(0).getLettre()));
@@ -308,4 +341,7 @@ public void ButtonClicked2(ActionEvent e) {
 			
 		}
 	}
+	
+	
+
 }
