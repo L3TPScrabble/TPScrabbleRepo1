@@ -148,11 +148,12 @@ public class ViewController {
 	                    if (db.hasString()) {
 	                    	
 		                        //Get the textarea and place it into flowPane2 instead
-		                    	if(mainApp.getPartie().getPlateau().getMatrice()[l][k].isJouable() ){
+	                    	if(mainApp.getPartie().getPlateau().getMatrice()[l][k].isJouable() && !mainApp.getPartie().getPlateau().getMatrice()[l][k].isPleine()){
 			                    mainApp.getPartie().getPlateau().getCase(l,k).setPleine(true);
 			                    mainApp.getPartie().getPlateau().getCase(l,k).setHasChanged(true);
 		                    	char temp = noeud.toString().charAt(11);
 			                    Case C1 = new Case();
+			                    C1.setPleine(true);
 			    				Piece P1 = new Piece(temp);
 			    				C1.setContenu(P1);
 			    				C1.setJouable(false);
