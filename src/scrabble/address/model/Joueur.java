@@ -28,6 +28,10 @@ public class Joueur implements JoueurInterface{
 			getMain().add(sac.piocher());
 	}
 	
+/*	public void updateMain(Sac sac) {
+		
+	}*/
+	
 	public String getPseudo(){
 		return pseudo;
 	}

@@ -33,67 +33,57 @@ public class Plateau extends Application implements PlateauInterface{
 
 
 	public Boolean estPlein() {
-		for(int i=0; i<15 ; i++)
-			for(int j=0; j<15; j++)
+		for(int i=0; i<=14 ; i++)
+			for(int j=0; j<=14; j++)
 				if(matrice[i][j].estVide())
 					return false;			
 		return true;
 	}
 	
-	public int ScoreMot(String mot, int i, int j, String d) { //i et j sont les coordonnées de la premiere lettre de mot, d est la direction du mot(gauche à droite / haut en bas) 
-		int temp,g;
-		boolean motDouble = false, motTriple = false;
-		char[] charArray = mot.toCharArray();
-		int compteurPoints = 0;
-		if(d.equals("droite"))
-		{
-			g = i;
-			temp = i + charArray.length -1;
-			while(g<temp)
-			{
-				for(char c : charArray)
-				{
-					if(matrice[g][j].getId() == 1) //case de couleur verte
-						compteurPoints = compteurPoints + matrice[g][j].getContenu().getPoints();
-					else if(matrice[g][j].getId() == 2) //case de couleur bleu clair
-						compteurPoints = compteurPoints + matrice[g][j].getContenu().getPoints() * 2 ;
-					else if(matrice[g][j].getId() == 3) //case de couleur bleu foncé
-						compteurPoints = compteurPoints + matrice[g][j].getContenu().getPoints() * 3 ;
-					else if(matrice[g][j].getId() == 4) //case de couleur rose
-						motDouble = true;
-					else if(matrice[g][j].getId() == 5) //case de couleur rouge
-						motTriple = true;
-					g++;
+	
+	//Calcul du score à partir des coordonnées de la première lettre (i1,j1) et de la derniere lettre (i2,j2)
+	public int score(int i1, int j1, int i2, int j2){
+		int total = 0;
+		boolean motDouble = false;
+		boolean motTriple = false;
+		//mot de haut en bas
+		if(i1 == i2){ 
+			for(int j = j1; j<=j2; j++){
+				if(matrice[i1][j].isPink()){
+					motDouble = true;
+					total = total + matrice[i1][j].getContenu().getPoints() ;
 				}
+				if(matrice[i1][j].isRed()){
+					motTriple = true;
+					total = total + matrice[i1][j].getContenu().getPoints();
+				}
+				if(matrice[i1][j].isBlue())
+					total = total + matrice[i1][j].getContenu().getPoints() * 3;
+				if(matrice[i1][j].isCyan())
+					total = total + matrice[i1][j].getContenu().getPoints() * 2;
 			}
 		}
-		else if(d.equals("bas"))
-		{
-			g = j;
-			temp = j + charArray.length -1;
-			while(g<temp)
-			{
-				for(char c : charArray)
-				{
-					if(matrice[i][g].getId() == 1) //case de couleur verte
-						compteurPoints = compteurPoints + matrice[i][g].getContenu().getPoints();
-					else if(matrice[i][g].getId() == 2) //case de couleur bleu clair
-						compteurPoints = compteurPoints + matrice[i][g].getContenu().getPoints() * 2 ;
-					else if(matrice[i][g].getId() == 3) //case de couleur bleu foncé
-						compteurPoints = compteurPoints + matrice[i][g].getContenu().getPoints() * 3 ;
-					else if(matrice[i][g].getId() == 4) //case de couleur rose
-						motDouble = true;
-					else if(matrice[i][g].getId() == 5) //case de couleur rouge
-						motTriple = true;
-					g++;
+		else if(j1 == j2){
+			for(int i = i1; i<=i2; i++){
+				if(matrice[i][j1].isPink()){
+					motDouble = true;
+					total = total + matrice[i][j1].getContenu().getPoints() ;
 				}
+				if(matrice[i][j1].isRed()){
+					motTriple = true;
+					total = total + matrice[i][j1].getContenu().getPoints();
+				}
+				if(matrice[i][j1].isBlue())
+					total = total + matrice[i][j1].getContenu().getPoints() * 3;
+				if(matrice[i][j1].isCyan())
+					total = total + matrice[i][j1].getContenu().getPoints() * 2;
 			}
 		}
-		if(motDouble == true)
-			compteurPoints = compteurPoints * 2 ;
-		if(motTriple == true)
-			compteurPoints = compteurPoints * 3 ;
-		return compteurPoints;
+		if(motDouble)
+			total = total * 2;
+		if(motTriple)
+			total = total * 3;
+		return total;
 	}
 	
 	/*public void addMot(String mot, int i, int j, String d) { //i et j sont les coordonnées de la premiere lettre de mot, d est la direction du mot(gauche à droite / haut en bas)
@@ -204,7 +194,6 @@ public class Plateau extends Application implements PlateauInterface{
 				Piece P1 = new Piece(tableau[i][j]);
 				C1.setContenu(P1);
 				this.matrice[i][j] = C1;
-
 			}
 		}
 	}*/
@@ -217,6 +206,8 @@ public class Plateau extends Application implements PlateauInterface{
 	public void addMot(String mot, int i, int j, String d) {
 		// TODO Auto-generated method stub
 		
-	}    
+	}
+
+
 
 }

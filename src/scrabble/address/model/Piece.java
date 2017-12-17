@@ -4,7 +4,6 @@ package scrabble.address.model;
 import interfaces.PieceInterface;
 
 public class Piece implements PieceInterface{
-	
 	private char lettre;
 	private int points;
 	private boolean joker;
@@ -59,3 +58,6 @@ public class Piece implements PieceInterface{
 	
 	
 }
+
+	
+	

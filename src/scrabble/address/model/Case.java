@@ -3,33 +3,57 @@ package scrabble.address.model;
 import interfaces.CaseInterface;
 
 public class Case extends Plateau implements CaseInterface{
-	private int id;
 	private boolean estVide;
 	private Piece contenu;
 	private boolean jouable;
+	private boolean hasChanged;
 	private boolean pleine;
+	private boolean isCyan;
+	private boolean isBlue;
+	private boolean isPink;
+	private boolean isRed;
 	private int x;
 	private int y;
 	
 	public Case() {
-		this.id = 0;
 		this.estVide = true;
 		this.contenu = null;
+		this.hasChanged = false;
 		
 	}
+	
 	public Case(int x , int y) {
-		this.id = 0;
 		this.estVide = true;
 		this.contenu = null;
+		this.hasChanged = false;
 		this.x = x;
 		this.y = y;
-		
+		//Case rouge
+		if((x == 0 && ( (y == 0) || (y == 7) || (y == 14) ) )
+		   || (x == 7 && ( (y == 0) || (y == 14) ) )
+		   || (x == 14 && ( (y == 0) || (y == 7) || (y == 14) ) )
+		   )
+			isRed = true;
+		//Case rose
+		else if((x == 1 && (y == 1 || y == 13)) || (x == 2 && (y == 2 || y == 12)) 
+        		|| (x == 3 && (y == 3 || y == 11)) || (x == 4 && (y == 4 || y == 10))
+        		|| (x == 10 && (y == 4 || y == 10)) || (y == 11 && (y == 3 || y == 11))
+        		|| (x == 12 && (y == 2 || y == 12)) || (x == 13 && (y == 1 || y == 13)))
+			isPink = true;
+		//Case Blue
+		 else if((x == 1 && (y == 5 || y == 9)) 
+         		|| (x == 5 && (y == 1 || y == 5 || y == 9 || y == 13))
+         		|| (x == 9 && (y == 1 || y == 5 || y == 9 || y == 13))
+         		|| (x == 13 && (y == 5 || y == 9)))
+			isBlue = true;
+		 else if(((x == 0 || x == 14) && (y == 3 || y == 11)) 
+         		|| ((x == 2 || x == 12) && (y == 6 || y == 8))
+         		|| ((x == 3 || x == 11) && (y == 0 || y == 7 || y == 14))
+         		|| ((x == 6 || x == 8) && (y == 2 || y == 6 || y == 8 || y == 12))
+         		|| (x == 7 && (y == 3 || y == 11)))
+			 isCyan = true;
 	}
-	public Case(int id) {
-		this.id = id;
-		this.estVide = true;
-		this.contenu = null;
-	}
+	
 
 
 	public boolean estVide() {
@@ -47,34 +71,60 @@ public class Case extends Plateau implements CaseInterface{
 		contenu = nouveauContenu ;
 	}
 	
-	/**
-	 * @return the pleine
-	 */
-	public boolean isPleine() {
-		return pleine;
+	public boolean HasChanged(){
+		return hasChanged;
 	}
-	/**
-	 * @param pleine the pleine to set
-	 */
-	public void setPleine(boolean pleine) {
-		this.pleine = pleine;
+	
+	public void setHasChanged(boolean _hasChanged){
+		this.hasChanged = _hasChanged;
 	}
+	
 	public boolean isJouable() {
 		return jouable;
 	}
+	
 	public void setJouable(boolean b) {
 		this.jouable = true;
 	}
-
 	
-	public int getId()
-	{
-		return id;
+	public boolean isPleine() {
+		return pleine;
 	}
 	
-	public void setId(int nouvelleId)
-	{
-		id = nouvelleId;
+	public void setPleine(boolean _pleine){
+		pleine = _pleine;
+	}
+	
+	public boolean isCyan(){
+		return isCyan;
+	}
+	
+	public void setIsCyan(boolean _cyan){
+		isCyan = _cyan;
+	}
+	
+	public boolean isBlue(){
+		return isBlue;
+	}
+	
+	public void setIsBlue(boolean _blue){
+		isBlue = _blue;
+	}
+	
+	public boolean isRed(){
+		return isRed;
+	}
+	
+	public void setIsRed(boolean _red){
+		isRed = _red;
+	}
+	
+	public boolean isPink(){
+		return isPink;
+	}
+	
+	public void setIsPink(boolean _pink){
+		isPink = _pink;
 	}
 	
 	public int bonusCase(CaseInterface c) {

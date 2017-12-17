@@ -32,9 +32,33 @@ public class Partie implements PartieInterface{
 		this.participants = new ArrayList<Joueur>();
 		this.sac = new Sac();
 		this.plateau = new Plateau();
-		for(int i=0;i<this.plateau.getTaille();i++){
-			for(int j=0;j<this.plateau.getTaille();j++)
-				this.plateau.setCase(c2, i, j);
+		for(int x=0;x<this.plateau.getTaille();x++){
+			for(int y=0;y<this.plateau.getTaille();y++){
+				this.plateau.setCase(c2, x, y);
+				if((x == 0 && ( (y == 0) || (y == 7) || (y == 14) ) )
+						   || (x == 7 && ( (y == 0) || (y == 14) ) )
+						   || (x == 14 && ( (y == 0) || (y == 7) || (y == 14) ) )
+						   )
+							this.plateau.getCase(x, y).setIsRed(true);
+						//Case rose
+						else if((x == 1 && (y == 1 || y == 13)) || (x == 2 && (y == 2 || y == 12)) 
+				        		|| (x == 3 && (y == 3 || y == 11)) || (x == 4 && (y == 4 || y == 10))
+				        		|| (x == 10 && (y == 4 || y == 10)) || (y == 11 && (y == 3 || y == 11))
+				        		|| (x == 12 && (y == 2 || y == 12)) || (x == 13 && (y == 1 || y == 13)))
+							this.plateau.getCase(x, y).setIsPink(true);
+						//Case Blue
+						 else if((x == 1 && (y == 5 || y == 9)) 
+				         		|| (x == 5 && (y == 1 || y == 5 || y == 9 || y == 13))
+				         		|| (x == 9 && (y == 1 || y == 5 || y == 9 || y == 13))
+				         		|| (x == 13 && (y == 5 || y == 9)))
+							 this.plateau.getCase(x, y).setIsBlue(true);
+						 else if(((x == 0 || x == 14) && (y == 3 || y == 11)) 
+				         		|| ((x == 2 || x == 12) && (y == 6 || y == 8))
+				         		|| ((x == 3 || x == 11) && (y == 0 || y == 7 || y == 14))
+				         		|| ((x == 6 || x == 8) && (y == 2 || y == 6 || y == 8 || y == 12))
+				         		|| (x == 7 && (y == 3 || y == 11)))
+							 this.plateau.getCase(x, y).setIsCyan(true);
+			}
 		}
 		this.plateau.setCase(c1,7,7);
 		
