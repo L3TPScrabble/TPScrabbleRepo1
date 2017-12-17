@@ -98,13 +98,18 @@ public class Partie implements PartieInterface{
 	}
 
 	public void coupJoue(int x,int y){
-		Case c1 = new Case();
-		c1.setJouable(true);
-		for(int i = -1;i<=1;i++){
-				this.plateau.setCase(c1,x+i,y);
-				this.plateau.setCase(c1,x, y+i);
-			}
-		}
+        Case c1 = new Case();
+        c1.setJouable(true);
+        for(int i = -1;i<=1;i++){
+            if(i != 0 && !this.plateau.getCase(x+i,y).isPleine()){
+                this.plateau.setCase(c1,x+i,y);
+            }
+            if(i != 0 && !this.plateau.getCase(x,y+i).isPleine()){
+                this.plateau.setCase(c1,x, y+i);
+            }
+        }
+        
+    }
 	
 	
 	
