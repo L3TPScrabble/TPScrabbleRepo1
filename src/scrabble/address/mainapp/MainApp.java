@@ -293,11 +293,11 @@ public class MainApp extends Application {
          ViewController controller = loader.getController();
          
          GridPane grid = new GridPane();
-         for(int row=0; row<15; row++) {
-             for(int col=0; col<15; col++) {
+         for(int row=0; row<=14; row++) {
+             for(int col=0; col<=14; col++) {
                  Rectangle rec = new Rectangle();
-                 rec.setWidth(50);
-                 rec.setHeight(50);
+                 rec.setWidth(40);
+                 rec.setHeight(40);
                 // set color of each rectangle
                 if((row == 0 && (col == 0 || col == 7 || col == 14)) 
                 		 || (row == 7 && (col == 0 || col == 7 || col == 14))
