@@ -149,14 +149,12 @@ public class ViewController {
 	                    	
 		                        //Get the textarea and place it into flowPane2 instead
 	                    	if(mainApp.getPartie().getPlateau().getMatrice()[l][k].isJouable() && !mainApp.getPartie().getPlateau().getMatrice()[l][k].isPleine()){
-			                    mainApp.getPartie().getPlateau().getCase(l,k).setPleine(true);
-			                    mainApp.getPartie().getPlateau().getCase(l,k).setHasChanged(true);
-		                    	char temp = noeud.toString().charAt(11);
-			                    Case C1 = new Case();
+		                    	char temp = noeud.toString().charAt(11); 	//On récupère la lettre dans le noeud
+			                    Case C1 = new Case();		
 			                    C1.setPleine(true);
+			                    C1.setHasChanged(true);
 			    				Piece P1 = new Piece(temp);
 			    				C1.setContenu(P1);
-			    				C1.setJouable(false);
 			    				mainApp.getPartie().getPlateau().setCase(C1,l,k);
 		                    	mainApp.getGP().add(noeud, k, l);
 			    				label.setText(Character.toString(mainApp.getPartie().getPlateau().getCase(l, k).getContenu().getLettre()));
@@ -261,12 +259,35 @@ public class ViewController {
 		int compteur=joueurActuel;
 		int nombreJoueur = mainApp.getPartie().getParticipants().size();
 		int i_premier = 0 , i_dernier = 0 , j_premier = 0 , j_dernier = 0;
+		boolean verif = false;
+		boolean motCorrecte = false;
 		int compteurLettre = 0;
+		String mot = "";
 		boolean premiereLettre = true;
 		System.out.println("Il y a : "+nombreJoueur);
-
+		
+		
+	
 		if(e.getSource()==btnNewPlayer)
 		{
+			mot = mainApp.getPartie().rechercheMot();
+			System.out.println("Le mot est1 : " + mot + "\n");
+			if(mot != ""){
+				mainApp.getPartie().verifMot(mot);
+				verif = true;
+			}
+			if(verif == true){
+				System.out.println("Le mot est "+mot+"\n");
+				motCorrecte= mainApp.getPartie().verifMot(mot);
+				System.out.println("Le mot est "+motCorrecte);
+				}
+			
+			for (int i = 0; i <= 14; i++) {
+	            for (int j = 0; j <= 14; j++) {
+	            	if(mainApp.getPartie().getPlateau().getCase(i, j).HasChanged())
+	            		mainApp.getPartie().getPlateau().getCase(i, j).setHasChanged(false);
+	            }
+			}
 			//Recuperation des coordonnées de la premiere lettre et de la dernière lettre du mot
 			for (int i = 0; i <= 14; i++) {
 	            for (int j = 0; j <= 14; j++) {
@@ -283,10 +304,9 @@ public class ViewController {
 	            }
 			}
 			//Actualisation du score du joueur
-			mainApp.getPartie().getParticipants().get(compteur).setScore(mainApp.getPartie().getPlateau().score(i_premier, j_premier, i_dernier, j_dernier));			
+			//mainApp.getPartie().getParticipants().get(compteur).setScore(mainApp.getPartie().getPlateau().score(i_premier, j_premier, i_dernier, j_dernier));			
 			
-			
-			score.setText(String.valueOf(mainApp.getPartie().getParticipants().get(compteur).getScore()));
+		//	score.setText(String.valueOf(mainApp.getPartie().getParticipants().get(compteur).getScore()));
 			System.out.println(lettre0.getText());
 			
 			if(mainApp.getPartie().getParticipants().get(compteur).getMain().get(0).getLettre() == '\0'){

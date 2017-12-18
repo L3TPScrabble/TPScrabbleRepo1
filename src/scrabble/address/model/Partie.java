@@ -115,7 +115,59 @@ public class Partie implements PartieInterface{
 	
 	
 
+	public String rechercheMot(){
+		String mot = "";
+		int compteur =0;
+		int iPremiereCase = 0;
+		int jPremiereCase = 0;
+		boolean verif = false;
+	for(int i=0;i<getPlateau().getTaille();i++){		
+		for(int j=0;j<getPlateau().getTaille();j++){
+			
+			if(getPlateau().getCase(i,j).HasChanged() && compteur == 0){
+				
+				iPremiereCase = i;
+				 jPremiereCase = j;
+				 verif = true;
+				 compteur++;
+				 System.out.println("Premiere case trouvé"+iPremiereCase+jPremiereCase);
+			}
+				
+		}
+	}
+	if(verif == true){
+		if(getPlateau().isCaseDroite(iPremiereCase, jPremiereCase) || getPlateau().isCaseGauche(iPremiereCase, jPremiereCase)){
+			if(getPlateau().isCaseGauche(iPremiereCase, jPremiereCase)){
+				while(getPlateau().isCaseGauche(iPremiereCase, jPremiereCase)){
+					jPremiereCase= jPremiereCase -1;
 
+				}
+			}
+			while(getPlateau().getCase(iPremiereCase, jPremiereCase).isPleine()){
+				mot = mot + getPlateau().getCase(iPremiereCase, jPremiereCase).getContenu().getLettre();
+				jPremiereCase = jPremiereCase + 1;
+
+			}
+		
+		}
+		
+		if(getPlateau().isCaseBas(iPremiereCase, jPremiereCase) || getPlateau().isCaseHaut(iPremiereCase, jPremiereCase)){
+			if(getPlateau().isCaseHaut(iPremiereCase, jPremiereCase)){
+				while(getPlateau().isCaseHaut(iPremiereCase, jPremiereCase)){
+					iPremiereCase= iPremiereCase -1;
+
+				}
+			}
+			while(getPlateau().getCase(iPremiereCase, jPremiereCase).isPleine()){
+				mot = mot + getPlateau().getCase(iPremiereCase, jPremiereCase).getContenu().getLettre();
+				iPremiereCase = iPremiereCase + 1;
+
+			}
+		}
+	}
+	
+	return mot;
+}
 
 	public boolean verifMot(String mot) {
 		File file = new File("dico.txt");

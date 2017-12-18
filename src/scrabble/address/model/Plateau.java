@@ -18,7 +18,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 
-public class Plateau extends Application implements PlateauInterface{
+public class Plateau  implements PlateauInterface{
 
 
 	private Case[][] matrice;
@@ -77,7 +77,7 @@ public class Plateau extends Application implements PlateauInterface{
 					total = total + matrice[i][j1].getContenu().getPoints() * 3;
 				if(matrice[i][j1].isCyan())
 					total = total + matrice[i][j1].getContenu().getPoints() * 2;
-			}
+			} 
 		}
 		if(motDouble)
 			total = total * 2;
@@ -132,61 +132,7 @@ public class Plateau extends Application implements PlateauInterface{
 		return taille;
 	}
 
-	@Override
-	public void start(Stage primaryStage) throws Exception {
-		// TODO Auto-generated method stub
-		int SIZE = 10;
-        int length = 15;
-        int width = 15;
-        
-        
-        
-        GridPane root = new GridPane();    
 
-        for(int y = 0; y < length; y++){
-            for(int x = 0; x < width; x++){
-            	
-            	
-            	if(y == 0)
-            	{
-            		if(x == 0 || x == 7 || x == 14)
-            			root.setStyle("-fx-background-color: red; -fx-border-color: redrod;");
-            		if(x == 3 || x == 11)
-            			root.setStyle("-fx-background-color: blue; -fx-border-color: bluerod;");
-            	}
-            	if(y == 1)
-            	{
-            		if(x == 1 || x == 13)
-            			root.setStyle("-fx-background-color: pink; -fx-border-color: pinkrod;");
-            		else if(x == 5 || x == 9)
-            			root.setStyle("-fx-background-color: blue; -fx-border-color: bluerod;");
-            		else
-            			root.setStyle("-fx-background-color: green; -fx-border-color: greenrod;");
-            	}
-
-            	Random rand = new Random();
-                int rand1 = rand.nextInt(2);
-
-                // Create a new TextField in each Iteration
-                TextField tf = new TextField();
-                tf.setPrefHeight(50);
-                tf.setPrefWidth(50);
-                tf.setAlignment(Pos.CENTER);
-                tf.setEditable(false);
-                tf.setText("(" + rand1 + ")");
-
-                // Iterate the Index using the loops
-                root.setRowIndex(tf,y);
-                root.setColumnIndex(tf,x);    
-                root.getChildren().add(tf);
-            }
-        }
-
-        Scene scene = new Scene(root, 500, 500);    
-        primaryStage.setTitle("Random Binary Matrix (JavaFX)");
-        primaryStage.setScene(scene);
-        primaryStage.show();
-    }
 /*	public void plateauRemp(char[][] tableau){
 		for(int i=0;i<15;i++){
 			for(int j=0;j<15;j++){
@@ -201,12 +147,50 @@ public class Plateau extends Application implements PlateauInterface{
 	public void setCase(Case C , int i , int j){
 		this.matrice[i][j] = C;
 	}
+	public boolean isCaseGauche(int i ,int j) {
+		if(j-1 >= 0)
+			if(this.matrice[i][j-1].isPleine())
+				return true;
+		
+		return false;
+			
+	}
 
+	/**
+	 * @return the caseHaut
+	 */
+	public boolean isCaseHaut(int i ,int j) {
+	if(i-1 >= 0)
+		if(this.matrice[i-1][j].isPleine())
+			return true;
+	
+		return false;
+	}
+	
+	public boolean isCaseDroite(int i ,int j) {
+	if(j+1 < this.taille)
+		if(this.matrice[i][j+1].isPleine())
+			return true;
+	
+		return false;
+	}
+
+	/**
+	 * @return the caseDessus
+	 */
+	public boolean isCaseBas(int i ,int j) {
+	if(i+1 < this.taille)
+		if(this.matrice[i+1][j].isPleine())
+			return true;
+	
+		return false;
+	}
 	@Override
 	public void addMot(String mot, int i, int j, String d) {
 		// TODO Auto-generated method stub
 		
 	}
+
 
 
 

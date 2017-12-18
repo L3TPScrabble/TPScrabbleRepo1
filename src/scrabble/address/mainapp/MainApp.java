@@ -296,7 +296,7 @@ public class MainApp extends Application {
          for(int row=0; row<=14; row++) {
              for(int col=0; col<=14; col++) {
                  Rectangle rec = new Rectangle();
-                 rec.setWidth(40);
+                 rec.setWidth(50);
                  rec.setHeight(40);
                 // set color of each rectangle
                 if((row == 0 && (col == 0 || col == 7 || col == 14)) 

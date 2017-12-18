@@ -12,6 +12,10 @@ public class Case extends Plateau implements CaseInterface{
 	private boolean isBlue;
 	private boolean isPink;
 	private boolean isRed;
+	private boolean caseDroite;
+	private boolean caseBas;
+	private boolean caseGauche;
+	private boolean caseHaut;
 	private int x;
 	private int y;
 	
@@ -131,4 +135,29 @@ public class Case extends Plateau implements CaseInterface{
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
+	/**
+	 * @return the caseDroite
+	 */
+	
+
+	/**
+	 * @param caseDroite the caseDroite to set
+	 */
+	public void setCaseDroite(boolean caseDroite) {
+		this.caseDroite = caseDroite;
+	}
+
+	/**
+	 * @param caseDessus the caseDessus to set
+	 */
+	public void setCaseBas(boolean caseBas) {
+		this.caseBas = caseBas;
+	}
+
+	/**
+	 * @return the caseGauche
+	 */
+	
+
 }
