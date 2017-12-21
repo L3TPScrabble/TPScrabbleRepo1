@@ -49,7 +49,7 @@ public class ViewController {
 	private String labelNameStock;
 	@FXML
 	private Label lettre0;
-
+		
 	@FXML
 	private Label lettre1;
 
@@ -81,6 +81,9 @@ public class ViewController {
 	@FXML
 	private Label score;
 	
+	@FXML
+	private Label pseudo;
+	
 	private int joueurActuel = 0;
 	
 	private MainApp mainApp;
@@ -98,11 +101,14 @@ public class ViewController {
 	}
 	
 	
+	
+	
 	public void setMainApp(MainApp mainApp){
 		this.mainApp = mainApp;
 
 		//Assigner la main Generée à la main affichée
 		try{
+			pseudo.setText(mainApp.getPartie().getParticipants().get(0).getPseudo());
 			score.setText(String.valueOf(mainApp.getPartie().getParticipants().get(0).getScore()));
 			String stck = Character.toString(mainApp.getPartie().getParticipants().get(0).getMain().get(0).getLettre());
 			lettre0.setText(stck);
@@ -239,6 +245,7 @@ public class ViewController {
 			this.labelNameStock = event.getSource().toString();
 		    content.putString(this.node.toString());
 		    db.setContent(content);
+		    System.out.println("voici le contenu  : \n" + content );
 		    //Consume the event
 		    event.consume();
 			
@@ -308,14 +315,15 @@ public class ViewController {
 		int compteur=joueurActuel;
 		int nombreJoueur = mainApp.getPartie().getParticipants().size();
 		int i_premier = 0 , i_dernier = 0 , j_premier = 0 , j_dernier = 0;
+		int compteurLettre = 0;
+		int temp_score = 0;
+		boolean premiereLettre = true;
 		boolean verif = false;
 		boolean motCorrecte = false;
 		String mot = "";
-		boolean premiereLettre = true;
+		
 		System.out.println("Il y a : "+nombreJoueur);
 		
-		
-	
 		if(e.getSource()==btnNewPlayer)
 		{
 			mot = mainApp.getPartie().rechercheMot();
@@ -333,41 +341,39 @@ public class ViewController {
 					mainApp.getPartie().motFaux();
 					System.out.println(mainApp.getPartie().getPlateau().getCase(7, 7).isJouable());
 		//			mainApp.getPartie().actualiseCaseJouable();
+				}
+			}
+			for(int i = 0; i<=14; i++){
+				for(int j = 0 ; j<=14; j++){
+					if(mainApp.getPartie().getPlateau().getCase(i,j).HasChanged() && premiereLettre){
+         		
+							i_premier = i;
+							j_premier = j;
+							premiereLettre = false;
 					}
-        			
-					
-				
-			
+					else if(mainApp.getPartie().getPlateau().getCase(i,j).HasChanged()){
+						i_dernier = i;
+						j_dernier = j;
+					}
+				}
 			}
-			//Recuperation des coordonnées de la premiere lettre et de la dernière lettre du mot
-			for (int i = 0; i <= 14; i++) {
-	            for (int j = 0; j <= 14; j++) {
-	            	if(mainApp.getPartie().getPlateau().getCase(i,j).HasChanged() && premiereLettre){
-	            		
-	            		i_premier = i;
-	            		j_premier = j;
-	            		premiereLettre = false;
-	            	}
-	            	else if(mainApp.getPartie().getPlateau().getCase(i,j).HasChanged()){
-	            		i_dernier = i;
-	            		j_dernier = j;
-	            	}
-	            }
-			}
+			System.out.println("Coordonnées de la premiere lettre : i = " + i_premier + "    j = " + j_premier);
+			System.out.println("Coordonnées de la derniere lettre : i = " + i_dernier + "    j = " + j_dernier);
+			//Actualisation du score du joueur
+			if(i_dernier != 0 && j_dernier != 0)
+				mainApp.getPartie().getParticipants().get(compteur).setScore(mainApp.getPartie().getParticipants().get(compteur).getScore() + mainApp.getPartie().getPlateau().score(i_premier, j_premier, i_dernier, j_dernier));
+			else
+				mainApp.getPartie().getParticipants().get(compteur).setScore(mainApp.getPartie().getParticipants().get(compteur).getScore() + mainApp.getPartie().getPlateau().score(i_premier,j_premier));
+			System.out.print("Score = " + mainApp.getPartie().getParticipants().get(compteur).getScore());
+			score.setText(String.valueOf(mainApp.getPartie().getParticipants().get(compteur).getScore()));
 			
-			for (int i = 0; i <= 14; i++) {
-	            for (int j = 0; j <= 14; j++) {
-	            	if(mainApp.getPartie().getPlateau().getCase(i, j).HasChanged())
-	            		mainApp.getPartie().getPlateau().getCase(i, j).setHasChanged(false);
-	            }
+			//On remet toutes les cases à faux pour le prochain tour
+			for(int i = 0; i<=14; i++){
+				for(int j = 0 ; j<=14; j++)
+					mainApp.getPartie().getPlateau().getCase(i, j).setHasChanged(false);
 			}
 			this.cpt2 = 0;
-			//Actualisation du score du joueur
-			//mainApp.getPartie().getParticipants().get(compteur).setScore(mainApp.getPartie().getPlateau().score(i_premier, j_premier, i_dernier, j_dernier));			
-			
-		//	score.setText(String.valueOf(mainApp.getPartie().getParticipants().get(compteur).getScore()));
-			System.out.println(lettre0.getText());
-			
+			//On remplit la main
 			if(mainApp.getPartie().getParticipants().get(compteur).getMain().get(0).getLettre() == '\0'){
 				mainApp.getPartie().getParticipants().get(compteur).getMain().get(0).setLettre(mainApp.getPartie().getSac().piocher().getLettre());
 				lettre0.setText(Character.toString(mainApp.getPartie().getParticipants().get(compteur).getMain().get(0).getLettre()));
@@ -396,12 +402,16 @@ public class ViewController {
 				mainApp.getPartie().getParticipants().get(compteur).getMain().get(6).setLettre(mainApp.getPartie().getSac().piocher().getLettre());
 				lettre6.setText(Character.toString(mainApp.getPartie().getParticipants().get(compteur).getMain().get(6).getLettre()));
 			}
+			//On essaye d'afficher la main du joueur suivant
 			try{
 				joueurActuel = joueurActuel+1;
 				if(joueurActuel == nombreJoueur)
 					joueurActuel = 0;
-					compteur=joueurActuel;
-
+				compteur=joueurActuel;
+				score.setText(String.valueOf(mainApp.getPartie().getParticipants().get(compteur).getScore()));
+				pseudo.setText(mainApp.getPartie().getParticipants().get(compteur).getPseudo());
+				if(joueurActuel == nombreJoueur)
+					joueurActuel = 0;
 				lettre0.setText(Character.toString(mainApp.getPartie().getParticipants().get(compteur).getMain().get(0).getLettre()));
 				lettre1.setText(Character.toString(mainApp.getPartie().getParticipants().get(compteur).getMain().get(1).getLettre()));
 				lettre2.setText(Character.toString(mainApp.getPartie().getParticipants().get(compteur).getMain().get(2).getLettre()));
@@ -409,7 +419,9 @@ public class ViewController {
 				lettre4.setText(Character.toString(mainApp.getPartie().getParticipants().get(compteur).getMain().get(4).getLettre()));
 				lettre5.setText(Character.toString(mainApp.getPartie().getParticipants().get(compteur).getMain().get(5).getLettre()));
 				lettre6.setText(Character.toString(mainApp.getPartie().getParticipants().get(compteur).getMain().get(6).getLettre()));
-			}catch(Exception i){
+			}
+			//Sinon cela signifie qu'un tour complet des joueurs à été réalisé et qu'il faut revenir au premier joueur
+			catch(Exception i){
 				compteur = 0;
 				lettre0.setText(Character.toString(mainApp.getPartie().getParticipants().get(compteur).getMain().get(0).getLettre()));
 				lettre1.setText(Character.toString(mainApp.getPartie().getParticipants().get(compteur).getMain().get(1).getLettre()));
@@ -422,6 +434,8 @@ public class ViewController {
 			
 		}
 	}
+	
+	
 	public static int[] getIntegers(String str) {
 		 
 	    ArrayList<Integer> list = new ArrayList<Integer>();
@@ -449,6 +463,7 @@ public class ViewController {
 	    }
 	    return result;
 	}
+	
 	
 
 }

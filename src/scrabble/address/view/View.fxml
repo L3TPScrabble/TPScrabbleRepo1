@@ -75,6 +75,7 @@
             <Button fx:id="btnNewPlayer" layoutX="48.0" layoutY="300.0" mnemonicParsing="false" onAction="#ButtonClicked2" text="Passer le tour" />
             <Label fx:id="score" layoutX="141.0" layoutY="506.0" prefHeight="28.0" prefWidth="43.0" text="Label" />
             <Label layoutX="14.0" layoutY="503.0" prefHeight="34.0" prefWidth="82.0" text="Votre Score :" />
+            <Label fx:id="pseudo" layoutX="57.0" layoutY="416.0" prefHeight="34.0" prefWidth="92.0" text="Joueur" />
          </children>
       </Pane>
    </right>
