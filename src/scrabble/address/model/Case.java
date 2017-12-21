@@ -43,7 +43,8 @@ public class Case extends Plateau implements CaseInterface{
 		else if((x == 1 && (y == 1 || y == 13)) || (x == 2 && (y == 2 || y == 12)) 
         		|| (x == 3 && (y == 3 || y == 11)) || (x == 4 && (y == 4 || y == 10))
         		|| (x == 10 && (y == 4 || y == 10)) || (y == 11 && (y == 3 || y == 11))
-        		|| (x == 12 && (y == 2 || y == 12)) || (x == 13 && (y == 1 || y == 13)))
+        		|| (x == 12 && (y == 2 || y == 12)) || (x == 13 && (y == 1 || y == 13))
+        		|| (x == 7 && y == 7))
 			isPink = true;
 		//Case Blue
 		 else if((x == 1 && (y == 5 || y == 9)) 
@@ -132,16 +133,24 @@ public class Case extends Plateau implements CaseInterface{
 		isPink = _pink;
 	}
 	
+	public void whichColor(){
+		if(isPink)
+			System.out.println("Cette case est rose ! ");
+		else if (isRed)
+			System.out.println("Cette case est rose ! ");
+		else if (isCyan)
+			System.out.println("Cette case est cyan ! ");
+		else if (isBlue)
+			System.out.println("Cette case est bleu ! ");
+		else
+			System.out.println("Cette case est verte ! ");
+	}
+	
 	public int bonusCase(CaseInterface c) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-
-	/**
-	 * @return the caseDroite
-	 */
 	
-
 	/**
 	 * @param caseDroite the caseDroite to set
 	 */
@@ -173,6 +182,4 @@ public class Case extends Plateau implements CaseInterface{
 	/**
 	 * @return the caseGauche
 	 */
-	
-
 }

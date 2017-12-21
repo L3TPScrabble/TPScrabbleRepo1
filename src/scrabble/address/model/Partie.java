@@ -40,11 +40,11 @@ public class Partie implements PartieInterface{
 						   || (x == 14 && ( (y == 0) || (y == 7) || (y == 14) ) )
 						   )
 							this.plateau.getCase(x, y).setIsRed(true);
-						//Case rose
 						else if((x == 1 && (y == 1 || y == 13)) || (x == 2 && (y == 2 || y == 12)) 
 				        		|| (x == 3 && (y == 3 || y == 11)) || (x == 4 && (y == 4 || y == 10))
 				        		|| (x == 10 && (y == 4 || y == 10)) || (y == 11 && (y == 3 || y == 11))
-				        		|| (x == 12 && (y == 2 || y == 12)) || (x == 13 && (y == 1 || y == 13)))
+				        		|| (x == 12 && (y == 2 || y == 12)) || (x == 13 && (y == 1 || y == 13))
+				        		|| (x == 7 && y == 7))
 							this.plateau.getCase(x, y).setIsPink(true);
 						//Case Blue
 						 else if((x == 1 && (y == 5 || y == 9)) 
@@ -57,14 +57,14 @@ public class Partie implements PartieInterface{
 				         		|| ((x == 3 || x == 11) && (y == 0 || y == 7 || y == 14))
 				         		|| ((x == 6 || x == 8) && (y == 2 || y == 6 || y == 8 || y == 12))
 				         		|| (x == 7 && (y == 3 || y == 11)))
-							 this.plateau.getCase(x, y).setIsCyan(true);
+							 this.plateau.getCase(x, y).setIsCyan(true);				
 			}
 		}
 		this.plateau.setCase(c1,7,7);
 		
 	}
 	
-	
+
 	
 	public void Distribution(){
 		for(Joueur j : participants)
@@ -124,7 +124,6 @@ public class Partie implements PartieInterface{
         
     }
 	
-	
 	public void actualiseCaseJouable(){
 		Case c1 = new Case();
 		c1.setJouable(false);
@@ -161,18 +160,17 @@ public class Partie implements PartieInterface{
 	}
 }
 	
-
 	public void motFaux(){
 		int iPremiereCase = 0;
 		int jPremiereCase = 0;
 		Case C1 = new Case();
-		 C1.setPleine(false);
-         C1.setHasChanged(false);
-         C1.setJouable(true);
+		C1.setPleine(false);
+        C1.setHasChanged(false);
+        C1.setJouable(true);
 		Piece P1 = new Piece();
 		C1.setContenu(P1);
 		Case C2 = new Case();
-		 C2.setPleine(false);
+		C2.setPleine(false);
         C2.setHasChanged(false);
 		Piece P2 = new Piece();
 		C2.setContenu(P2);
@@ -184,7 +182,7 @@ public class Partie implements PartieInterface{
 						getPlateau().setCase(C2,i,j);
 					}
 					else{
-					getPlateau().setCase(C1,i,j);
+						getPlateau().setCase(C1,i,j);
 					}
 					System.out.println("MOT FAUX");
 				}
@@ -192,60 +190,66 @@ public class Partie implements PartieInterface{
 			}
 		}
 	}
-
+	
 	public String rechercheMot(){
 		String mot = "";
 		int compteur =0;
 		int iPremiereCase = 0;
 		int jPremiereCase = 0;
 		boolean verif = false;
-	for(int i=0;i<getPlateau().getTaille();i++){		
-		for(int j=0;j<getPlateau().getTaille();j++){
+		for(int i=0;i<getPlateau().getTaille();i++){		
+			for(int j=0;j<getPlateau().getTaille();j++){
 			
-			if(getPlateau().getCase(i,j).HasChanged() && compteur == 0){
+				if(getPlateau().getCase(i,j).HasChanged() && compteur == 0){
 				
-				iPremiereCase = i;
-				 jPremiereCase = j;
-				 verif = true;
-				 compteur++;
-				 System.out.println("Premiere case trouvé"+iPremiereCase+jPremiereCase);
+					iPremiereCase = i;
+					jPremiereCase = j;
+					verif = true;
+					compteur++;
+					System.out.println("Premiere case trouvé"+iPremiereCase+jPremiereCase);
+				}	
+				
 			}
-				
 		}
-	}
-	if(verif == true){
-		if(getPlateau().isCaseDroite(iPremiereCase, jPremiereCase) || getPlateau().isCaseGauche(iPremiereCase, jPremiereCase)){
-			if(getPlateau().isCaseGauche(iPremiereCase, jPremiereCase)){
-				while(getPlateau().isCaseGauche(iPremiereCase, jPremiereCase)){
-					jPremiereCase= jPremiereCase -1;
+		if(verif == true){
+			if(getPlateau().isCaseDroite(iPremiereCase, jPremiereCase) || getPlateau().isCaseGauche(iPremiereCase, jPremiereCase)){
+				if(getPlateau().isCaseGauche(iPremiereCase, jPremiereCase)){
+					while(getPlateau().isCaseGauche(iPremiereCase, jPremiereCase)){
+						jPremiereCase= jPremiereCase -1;
+
+					}
+				}
+				while(getPlateau().getCase(iPremiereCase, jPremiereCase).isPleine()){
+					mot = mot + getPlateau().getCase(iPremiereCase, jPremiereCase).getContenu().getLettre();
+					jPremiereCase = jPremiereCase + 1;
+
+				}
+		
+			}
+		
+			if(getPlateau().isCaseBas(iPremiereCase, jPremiereCase) || getPlateau().isCaseHaut(iPremiereCase, jPremiereCase)){
+				if(getPlateau().isCaseHaut(iPremiereCase, jPremiereCase)){
+					while(getPlateau().isCaseHaut(iPremiereCase, jPremiereCase)){
+						iPremiereCase= iPremiereCase -1;
+
+					}
+				}
+				while(getPlateau().getCase(iPremiereCase, jPremiereCase).isPleine()){
+					mot = mot + getPlateau().getCase(iPremiereCase, jPremiereCase).getContenu().getLettre();
+					iPremiereCase = iPremiereCase + 1;
 
 				}
 			}
-			while(getPlateau().getCase(iPremiereCase, jPremiereCase).isPleine()){
-				mot = mot + getPlateau().getCase(iPremiereCase, jPremiereCase).getContenu().getLettre();
-				jPremiereCase = jPremiereCase + 1;
-
-			}
-		
 		}
-		
-		if(getPlateau().isCaseBas(iPremiereCase, jPremiereCase) || getPlateau().isCaseHaut(iPremiereCase, jPremiereCase)){
-			if(getPlateau().isCaseHaut(iPremiereCase, jPremiereCase)){
-				while(getPlateau().isCaseHaut(iPremiereCase, jPremiereCase)){
-					iPremiereCase= iPremiereCase -1;
-
-				}
-			}
-			while(getPlateau().getCase(iPremiereCase, jPremiereCase).isPleine()){
-				mot = mot + getPlateau().getCase(iPremiereCase, jPremiereCase).getContenu().getLettre();
-				iPremiereCase = iPremiereCase + 1;
-
-			}
-		}
-	}
 	
-	return mot;
-}
+		return mot;
+	}
+
+	
+	
+	
+
+
 
 	public boolean verifMot(String mot) {
 		File file = new File("dico.txt");
@@ -276,28 +280,6 @@ public class Partie implements PartieInterface{
 	}
 
 
-	public Plateau getPlateau() {
-		return plateau;
-	}
-
-
-
-	/**
-	 * @param plateau the plateau to set
-	 */
-	public void setPlateau(Plateau plateau) {
-		this.plateau = plateau;
-	}
-
-
-
-	@Override
-	public void newMot() {
-		// TODO Auto-generated method stub
-		
-	}
-
-
 
 	@Override
 	public void newJoueur() {
@@ -317,6 +299,17 @@ public class Partie implements PartieInterface{
 
 	@Override
 	public void jouerMot() {
+		// TODO Auto-generated method stub
+		
+	}
+	public Plateau getPlateau() {
+		return plateau;
+	}
+
+
+
+	@Override
+	public void newMot() {
 		// TODO Auto-generated method stub
 		
 	}

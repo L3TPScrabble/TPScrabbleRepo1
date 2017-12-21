@@ -34,7 +34,7 @@ public class Piece implements PieceInterface{
 	public Piece() {
 		// TODO Auto-generated constructor stub
 	}
-
+	
 	public char getLettre(){
 		return lettre;
 	}

@@ -18,7 +18,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 
-public class Plateau  implements PlateauInterface{
+public class Plateau extends Application implements PlateauInterface{
 
 
 	private Case[][] matrice;
@@ -43,46 +43,107 @@ public class Plateau  implements PlateauInterface{
 	
 	//Calcul du score à partir des coordonnées de la première lettre (i1,j1) et de la derniere lettre (i2,j2)
 	public int score(int i1, int j1, int i2, int j2){
+		System.out.println("Deuxieme methode");
 		int total = 0;
 		boolean motDouble = false;
 		boolean motTriple = false;
-		//mot de haut en bas
+		
+		//mot de gauche à droite
 		if(i1 == i2){ 
 			for(int j = j1; j<=j2; j++){
+				
+				matrice[i1][j].whichColor();
+				
+				//si la case est rose alors le mot compte double
 				if(matrice[i1][j].isPink()){
 					motDouble = true;
 					total = total + matrice[i1][j].getContenu().getPoints() ;
 				}
-				if(matrice[i1][j].isRed()){
+				
+				//Si la case est rouge alors le mot compte triple
+				else if(matrice[i1][j].isRed()){
 					motTriple = true;
 					total = total + matrice[i1][j].getContenu().getPoints();
 				}
-				if(matrice[i1][j].isBlue())
+				
+				//Si la case est bleu alors les points de la lettre valent triple
+				else if(matrice[i1][j].isBlue())
 					total = total + matrice[i1][j].getContenu().getPoints() * 3;
-				if(matrice[i1][j].isCyan())
+				
+				//Si la case est cyan alors les points de la lettre valent double
+				else if(matrice[i1][j].isCyan())
 					total = total + matrice[i1][j].getContenu().getPoints() * 2;
+				
+				//Sinon on ajoute uniquement les points de la lettre
+				else
+					total = total + matrice[i1][j].getContenu().getPoints();
 			}
 		}
+		
+		//mot de haut en bas
 		else if(j1 == j2){
 			for(int i = i1; i<=i2; i++){
+				
+				matrice[i][j1].whichColor();
 				if(matrice[i][j1].isPink()){
 					motDouble = true;
 					total = total + matrice[i][j1].getContenu().getPoints() ;
 				}
-				if(matrice[i][j1].isRed()){
+				else if(matrice[i][j1].isRed()){
 					motTriple = true;
 					total = total + matrice[i][j1].getContenu().getPoints();
 				}
-				if(matrice[i][j1].isBlue())
+				else if(matrice[i][j1].isBlue())
 					total = total + matrice[i][j1].getContenu().getPoints() * 3;
-				if(matrice[i][j1].isCyan())
+				else if(matrice[i][j1].isCyan())
 					total = total + matrice[i][j1].getContenu().getPoints() * 2;
-			} 
+				else
+					total = total + matrice[i][j1].getContenu().getPoints();
+			}
 		}
-		if(motDouble)
+		System.out.println("Mot double : " + motDouble);
+		if(motDouble){
 			total = total * 2;
-		if(motTriple)
+			System.out.println("Mot compte double !");
+		}
+		if(motTriple){
 			total = total * 3;
+			System.out.println("Mot compte triple !");
+		}
+		return total;
+	}
+	
+	//Lorsqu'on ne pose qu'une seule lettre
+	public int score(int i, int j){
+		System.out.println("Première methode");
+		int total = 0;
+		boolean motDouble = false;
+		boolean motTriple = false;
+		getCase(i,j).whichColor();
+		if(getCase(i,j).isPink()){
+			motDouble = true;
+			total =  getCase(i,j).getContenu().getPoints() ;
+		}
+		else if(getCase(i,j).isRed()){
+			motTriple = true;
+			total = getCase(i,j).getContenu().getPoints();
+		}
+		else if(getCase(i,j).isBlue())
+			total = getCase(i,j).getContenu().getPoints() * 3;
+		else if(getCase(i,j).isCyan())
+			total = getCase(i,j).getContenu().getPoints() * 2;
+		else
+			total = getCase(i,j).getContenu().getPoints();
+		System.out.println("Score : " + total);
+		System.out.println("Mot double : " + motDouble);
+		if(motDouble){
+			total = total * 2;
+			System.out.println("Mot compte double !");
+		}
+		if(motTriple){
+			total = total * 3;
+			System.out.println("Mot compte triple !");
+		}
 		return total;
 	}
 	
@@ -132,7 +193,61 @@ public class Plateau  implements PlateauInterface{
 		return taille;
 	}
 
+	@Override
+	public void start(Stage primaryStage) throws Exception {
+		// TODO Auto-generated method stub
+		int SIZE = 10;
+        int length = 15;
+        int width = 15;
+        
+        
+        
+        GridPane root = new GridPane();    
 
+        for(int y = 0; y < length; y++){
+            for(int x = 0; x < width; x++){
+            	
+            	
+            	if(y == 0)
+            	{
+            		if(x == 0 || x == 7 || x == 14)
+            			root.setStyle("-fx-background-color: red; -fx-border-color: redrod;");
+            		if(x == 3 || x == 11)
+            			root.setStyle("-fx-background-color: blue; -fx-border-color: bluerod;");
+            	}
+            	if(y == 1)
+            	{
+            		if(x == 1 || x == 13)
+            			root.setStyle("-fx-background-color: pink; -fx-border-color: pinkrod;");
+            		else if(x == 5 || x == 9)
+            			root.setStyle("-fx-background-color: blue; -fx-border-color: bluerod;");
+            		else
+            			root.setStyle("-fx-background-color: green; -fx-border-color: greenrod;");
+            	}
+
+            	Random rand = new Random();
+                int rand1 = rand.nextInt(2);
+
+                // Create a new TextField in each Iteration
+                TextField tf = new TextField();
+                tf.setPrefHeight(50);
+                tf.setPrefWidth(50);
+                tf.setAlignment(Pos.CENTER);
+                tf.setEditable(false);
+                tf.setText("(" + rand1 + ")");
+
+                // Iterate the Index using the loops
+                root.setRowIndex(tf,y);
+                root.setColumnIndex(tf,x);    
+                root.getChildren().add(tf);
+            }
+        }
+
+        Scene scene = new Scene(root, 500, 500);    
+        primaryStage.setTitle("Random Binary Matrix (JavaFX)");
+        primaryStage.setScene(scene);
+        primaryStage.show();
+    }
 /*	public void plateauRemp(char[][] tableau){
 		for(int i=0;i<15;i++){
 			for(int j=0;j<15;j++){
@@ -147,6 +262,7 @@ public class Plateau  implements PlateauInterface{
 	public void setCase(Case C , int i , int j){
 		this.matrice[i][j] = C;
 	}
+	
 	public boolean isCaseGauche(int i ,int j) {
 		if(j-1 >= 0)
 			if(this.matrice[i][j-1].isPleine())
@@ -185,12 +301,12 @@ public class Plateau  implements PlateauInterface{
 	
 		return false;
 	}
+
 	@Override
 	public void addMot(String mot, int i, int j, String d) {
 		// TODO Auto-generated method stub
 		
 	}
-
 
 
 
