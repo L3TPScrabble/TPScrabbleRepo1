@@ -296,17 +296,18 @@ public class MainApp extends Application {
          for(int row=0; row<=14; row++) {
              for(int col=0; col<=14; col++) {
                  Rectangle rec = new Rectangle();
-                 rec.setWidth(50);
+                 rec.setWidth(40);
                  rec.setHeight(40);
                 // set color of each rectangle
                 if((row == 0 && (col == 0 || col == 7 || col == 14)) 
-                		 || (row == 7 && (col == 0 || col == 7 || col == 14))
+                		 || (row == 7 && (col == 0 || col == 14))
                 		 || (row == 14 && (col == 0 || col == 7 || col == 14)))
                 	 rec.setFill(Color.RED);
                 else if((row == 1 && (col == 1 || col == 13)) || (row == 2 && (col == 2 || col == 12)) 
                 		|| (row == 3 && (col == 3 || col == 11)) || (row == 4 && (col == 4 || col == 10))
                 		|| (row == 10 && (col == 4 || col == 10)) || (row == 11 && (col == 3 || col == 11))
-                		|| (row == 12 && (col == 2 || col == 12)) || (row == 13 && (col == 1 || col == 13)))
+                		|| (row == 12 && (col == 2 || col == 12)) || (row == 13 && (col == 1 || col == 13))
+                		|| (row == 7 && col == 7))
                 	rec.setFill(Color.PINK);
                 else if((row == 1 && (col == 5 || col == 9)) 
                 		|| (row == 5 && (col == 1 || col == 5 || col == 9 || col == 13))
