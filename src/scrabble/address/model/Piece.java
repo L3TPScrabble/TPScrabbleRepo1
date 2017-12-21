@@ -31,6 +31,10 @@ public class Piece implements PieceInterface{
 			this.points = 0;
 	}
 	
+	public Piece() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public char getLettre(){
 		return lettre;
 	}

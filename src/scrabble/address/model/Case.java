@@ -16,6 +16,7 @@ public class Case extends Plateau implements CaseInterface{
 	private boolean caseBas;
 	private boolean caseGauche;
 	private boolean caseHaut;
+	private boolean caseJouableTour;
 	private int x;
 	private int y;
 	
@@ -153,6 +154,20 @@ public class Case extends Plateau implements CaseInterface{
 	 */
 	public void setCaseBas(boolean caseBas) {
 		this.caseBas = caseBas;
+	}
+
+	/**
+	 * @return the caseJouableTour
+	 */
+	public boolean isCaseJouableTour() {
+		return caseJouableTour;
+	}
+
+	/**
+	 * @param caseJouableTour the caseJouableTour to set
+	 */
+	public void setCaseJouableTour(boolean caseJouableTour) {
+		this.caseJouableTour = caseJouableTour;
 	}
 
 	/**

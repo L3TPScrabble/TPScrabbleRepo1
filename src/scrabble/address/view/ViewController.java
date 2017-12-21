@@ -1,6 +1,7 @@
 package scrabble.address.view;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 
 import javax.swing.GroupLayout.Alignment;
 
@@ -48,7 +49,7 @@ public class ViewController {
 	private String labelNameStock;
 	@FXML
 	private Label lettre0;
-		
+
 	@FXML
 	private Label lettre1;
 
@@ -60,6 +61,12 @@ public class ViewController {
 	private Pane pane2;
 	@FXML
 	private Label lettre3;
+	
+	private String restriction = "";
+	
+	
+	private int compteur = 0; 
+	private int cpt2 = 0;
 	
 	private Piece P1;
 	@FXML
@@ -93,6 +100,7 @@ public class ViewController {
 	
 	public void setMainApp(MainApp mainApp){
 		this.mainApp = mainApp;
+
 		//Assigner la main Generée à la main affichée
 		try{
 			score.setText(String.valueOf(mainApp.getPartie().getParticipants().get(0).getScore()));
@@ -121,10 +129,10 @@ public class ViewController {
 				}
 		    event.consume();
 			});
-		
+
 		 for (int i = 0; i <= 14; i++) {
 	            for (int j = 0; j <= 14; j++) {
-
+	            	
 	                Label label = new Label();
 	                GridPane.setColumnIndex(label, i);
 	                GridPane.setRowIndex(label, j);
@@ -144,27 +152,69 @@ public class ViewController {
 	                    Node noeud2;
 	    				
 	                   
-	                    //Could have some more thorough checks of course.
 	                    if (db.hasString()) {
-	                    	
-		                        //Get the textarea and place it into flowPane2 instead
-	                    	if(mainApp.getPartie().getPlateau().getMatrice()[l][k].isJouable() && !mainApp.getPartie().getPlateau().getMatrice()[l][k].isPleine()){
-		                    	char temp = noeud.toString().charAt(11); 	//On récupère la lettre dans le noeud
-			                    Case C1 = new Case();		
-			                    C1.setPleine(true);
-			                    C1.setHasChanged(true);
-			    				Piece P1 = new Piece(temp);
-			    				C1.setContenu(P1);
-			    				mainApp.getPartie().getPlateau().setCase(C1,l,k);
-		                    	mainApp.getGP().add(noeud, k, l);
-			    				label.setText(Character.toString(mainApp.getPartie().getPlateau().getCase(l, k).getContenu().getLettre()));
+	                    	//La case doit etre jouable et vide pour pouvoir y inserer une valeur
+	                    	if(mainApp.getPartie().getPlateau().getMatrice()[l][k].isJouable() && !mainApp.getPartie().getPlateau().getMatrice()[l][k].isPleine()){	
+	                    		//En dessous de  2 coup , aucune autres conditions pour le drop;
+	                    		
+	                    		if(cpt2<2){
 
-			    				System.out.println("La lettre jaoué est :"+mainApp.getPartie().getPlateau().getCase(l,k).getContenu().getLettre());
-			    				mainApp.getPartie().coupJoue(l,k);
-			    				supprimerTexteLabel(this.labelNameStock);
-			                    success = true;
+	                    				this.cpt2++;
+		                    			char temp = noeud.toString().charAt(11); 	//On récupère la lettre dans le noeud
+					                    Case C1 = new Case();		
+					                    C1.setPleine(true);
+					                    C1.setHasChanged(true);
+					    				Piece P1 = new Piece(temp);
+					    				C1.setContenu(P1);
+					    				mainApp.getPartie().getPlateau().setCase(C1,l,k);
+				                    	mainApp.getGP().add(noeud, k, l);
+					    				label.setText(Character.toString(mainApp.getPartie().getPlateau().getCase(l, k).getContenu().getLettre()));
+
+					    				restriction = mainApp.getPartie().coupJoue(l,k,this.cpt2);
+					    				supprimerTexteLabel(this.labelNameStock);
+					                    success = true;
+	                    		}
+	                    		//On autorise le drop sur une seule ligne / colonne (après 2 coups)
+	                    		if(cpt2>=2){			
+	                    			  String ligne = ""+l;
+	                    			  String colonne = ""+k;
+	                    			if(restriction.charAt(0) == 'l' && restriction.contains(ligne) ){
+	                    				this.cpt2++;
+		                    			char temp = noeud.toString().charAt(11); 	//On récupère la lettre dans le noeud
+					                    Case C1 = new Case();		
+					                    C1.setPleine(true);
+					                    C1.setHasChanged(true);
+					    				Piece P1 = new Piece(temp);
+					    				C1.setContenu(P1);
+					    				mainApp.getPartie().getPlateau().setCase(C1,l,k);
+				                    	mainApp.getGP().add(noeud, k, l);
+					    				label.setText(Character.toString(mainApp.getPartie().getPlateau().getCase(l, k).getContenu().getLettre()));
+					    				restriction = mainApp.getPartie().coupJoue(l,k,this.cpt2);
+					    				supprimerTexteLabel(this.labelNameStock);
+					                    success = true;
+
+	                    			} 
+	                    			
+	                    			if(restriction.charAt(0) == 'c' && restriction.contains(colonne)){		// On autorise le drop sur une seule colonne (après 2 coups)
+	                    				this.cpt2++;
+	                    				char temp = noeud.toString().charAt(11); 	//On récupère la lettre dans le noeud
+					                    Case C1 = new Case();		
+					                    C1.setPleine(true);
+					                    C1.setHasChanged(true);
+					    				Piece P1 = new Piece(temp);
+					    				C1.setContenu(P1);
+					    				mainApp.getPartie().getPlateau().setCase(C1,l,k);
+				                    	mainApp.getGP().add(noeud, k, l);
+					    				label.setText(Character.toString(mainApp.getPartie().getPlateau().getCase(l, k).getContenu().getLettre()));
+					    				restriction = mainApp.getPartie().coupJoue(l,k,this.cpt2);
+					    				supprimerTexteLabel(this.labelNameStock);
+					                    success = true;
+					                    
+	                    			}
+
+	                    		}
+		              
 			                    
-
 	                    	}
 	                    }
 	                    //Complete and consume the event.
@@ -189,7 +239,6 @@ public class ViewController {
 			this.labelNameStock = event.getSource().toString();
 		    content.putString(this.node.toString());
 		    db.setContent(content);
-		    System.out.println("voici le contenu  : \n" + content );
 		    //Consume the event
 		    event.consume();
 			
@@ -261,7 +310,6 @@ public class ViewController {
 		int i_premier = 0 , i_dernier = 0 , j_premier = 0 , j_dernier = 0;
 		boolean verif = false;
 		boolean motCorrecte = false;
-		int compteurLettre = 0;
 		String mot = "";
 		boolean premiereLettre = true;
 		System.out.println("Il y a : "+nombreJoueur);
@@ -280,13 +328,16 @@ public class ViewController {
 				System.out.println("Le mot est "+mot+"\n");
 				motCorrecte= mainApp.getPartie().verifMot(mot);
 				System.out.println("Le mot est "+motCorrecte);
-				}
+				if(motCorrecte==false){
+			//		mainApp.getPartie().getPlateau().setMatrice(this.backup);
+					mainApp.getPartie().motFaux();
+					System.out.println(mainApp.getPartie().getPlateau().getCase(7, 7).isJouable());
+		//			mainApp.getPartie().actualiseCaseJouable();
+					}
+        			
+					
+				
 			
-			for (int i = 0; i <= 14; i++) {
-	            for (int j = 0; j <= 14; j++) {
-	            	if(mainApp.getPartie().getPlateau().getCase(i, j).HasChanged())
-	            		mainApp.getPartie().getPlateau().getCase(i, j).setHasChanged(false);
-	            }
 			}
 			//Recuperation des coordonnées de la premiere lettre et de la dernière lettre du mot
 			for (int i = 0; i <= 14; i++) {
@@ -303,6 +354,14 @@ public class ViewController {
 	            	}
 	            }
 			}
+			
+			for (int i = 0; i <= 14; i++) {
+	            for (int j = 0; j <= 14; j++) {
+	            	if(mainApp.getPartie().getPlateau().getCase(i, j).HasChanged())
+	            		mainApp.getPartie().getPlateau().getCase(i, j).setHasChanged(false);
+	            }
+			}
+			this.cpt2 = 0;
 			//Actualisation du score du joueur
 			//mainApp.getPartie().getParticipants().get(compteur).setScore(mainApp.getPartie().getPlateau().score(i_premier, j_premier, i_dernier, j_dernier));			
 			
@@ -339,9 +398,10 @@ public class ViewController {
 			}
 			try{
 				joueurActuel = joueurActuel+1;
-				compteur=joueurActuel;
 				if(joueurActuel == nombreJoueur)
 					joueurActuel = 0;
+					compteur=joueurActuel;
+
 				lettre0.setText(Character.toString(mainApp.getPartie().getParticipants().get(compteur).getMain().get(0).getLettre()));
 				lettre1.setText(Character.toString(mainApp.getPartie().getParticipants().get(compteur).getMain().get(1).getLettre()));
 				lettre2.setText(Character.toString(mainApp.getPartie().getParticipants().get(compteur).getMain().get(2).getLettre()));
@@ -362,7 +422,33 @@ public class ViewController {
 			
 		}
 	}
-	
+	public static int[] getIntegers(String str) {
+		 
+	    ArrayList<Integer> list = new ArrayList<Integer>();
+	     
+	    //découper la phrase en mots
+	    String[] splited = str.split(" ");
+	     
+	    //parcourir les mots
+	    for (String current : splited) {
+	        try {
+	            //tenter de convertir le mot en int
+	            int parsedInt = Integer.parseInt (current);
+	            //ajouter l Integer à la list
+	            list.add(parsedInt);                    //un "auto boxing", une instance de Integer est créée à partir d'un int
+	        } catch (NumberFormatException e) {
+	            //c est pas un int
+	        }
+	    }
+	     
+	    //construire le résultat
+	    int[] result = new int[list.size()];
+	    for (int i = 0 ; i < list.size() ; i++) {
+	        //parcourir la list de Integer créée
+	        result[i] = list.get(i);
+	    }
+	    return result;
+	}
 	
 
 }
