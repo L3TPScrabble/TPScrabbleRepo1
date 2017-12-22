@@ -94,7 +94,7 @@ public class Partie implements PartieInterface{
 		return participants;
 	}
 
-	public String coupJoue(int x,int y,int compteur){
+	public String coupJoue(int x,int y,int compteur){		//Place la lettre sur la case choisis,les cases autours deviennent jouable
         Case c1 = new Case();
         String autorise = "";
         c1.setJouable(true);
@@ -124,13 +124,18 @@ public class Partie implements PartieInterface{
         
     }
 	
-	public void actualiseCaseJouable(){
+	public void actualiseCaseJouable(){		//Pas encore fonctionnel , actualise le terrain après avoir retiré un mot 
+											//, on ne peut plus joué sur ces cases.
 		Case c1 = new Case();
 		c1.setJouable(false);
+		c1.setHasChanged(false);
+	
 		for(int x = 1;x<getPlateau().getTaille()-1;x++){
 			for(int y = 1;y<getPlateau().getTaille()-1;y++){
 						  if( !this.plateau.getCase(x,y).isPleine() && this.plateau.getCase(x,y).isJouable() && !this.plateau.isCaseHaut(x,y) && !this.plateau.isCaseBas(x,y) && !this.plateau.isCaseGauche(x,y) && !this.plateau.isCaseDroite(x, y)){
-				               this.plateau.setCase(c1,x,y);}
+							  this.plateau.setCase(c1, x, y);
+							  
+							  }
 					 /*
 					  else  if(x == 0 ){
 						  if(i != 0 && !this.plateau.getCase(x+i,y).isPleine() && this.plateau.getCase(x,y).isJouable() && !this.plateau.getCase(x+i,y).isCaseHaut(x,y) && !this.plateau.getCase(x+i,y).isCaseBas(x+i,y)  && !this.plateau.getCase(x,y).isCaseDroite(x,y) ){
@@ -159,17 +164,17 @@ public class Partie implements PartieInterface{
 		}
 	}
 }
-	
+	//Le mot est faux , on enleve les lettres joué ce tour des cases.
 	public void motFaux(){
 		int iPremiereCase = 0;
 		int jPremiereCase = 0;
 		Case C1 = new Case();
 		C1.setPleine(false);
-        C1.setHasChanged(false);
-        C1.setJouable(true);
+        C1.setHasChanged(true);
 		Piece P1 = new Piece();
 		C1.setContenu(P1);
 		Case C2 = new Case();
+		C1.setJouable(true);
 		C2.setPleine(false);
         C2.setHasChanged(false);
 		Piece P2 = new Piece();
@@ -190,7 +195,7 @@ public class Partie implements PartieInterface{
 			}
 		}
 	}
-	
+	//Recherche le mot qui a été joué
 	public String rechercheMot(){
 		String mot = "";
 		int compteur =0;
@@ -199,7 +204,7 @@ public class Partie implements PartieInterface{
 		boolean verif = false;
 		for(int i=0;i<getPlateau().getTaille();i++){		
 			for(int j=0;j<getPlateau().getTaille();j++){
-			
+			//On recupere la premiere case qui a été joué
 				if(getPlateau().getCase(i,j).HasChanged() && compteur == 0){
 				
 					iPremiereCase = i;
@@ -211,6 +216,7 @@ public class Partie implements PartieInterface{
 				
 			}
 		}
+		//Maintenant , on cherche la premiere case du mot , en ligne et en colonne;
 		if(verif == true){
 			if(getPlateau().isCaseDroite(iPremiereCase, jPremiereCase) || getPlateau().isCaseGauche(iPremiereCase, jPremiereCase)){
 				if(getPlateau().isCaseGauche(iPremiereCase, jPremiereCase)){
